@@ -16,7 +16,7 @@
     this.elem.text("hello world");
     this.attrValue = this.elem.attr(this.options.workingAttr);
     var $actionList = this.extractStyles(this.attrValue);
-
+    console.log($actionList);
     this.myMethod();
     // return this so that we can chain and use the bridge with less code.
     return this;

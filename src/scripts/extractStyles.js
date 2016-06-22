@@ -31,7 +31,8 @@
     }
     if ($currentStyle.length)
         $style.push($currentStyle);
-    console.log($style.length);
-    for( i=0;i<$style.length; i++)
-        console.log($style[i]);
+    //console.log($style.length);
+    //for( i=0;i<$style.length; i++)
+    //    console.log($style[i]);
+    return $style;
 };

@@ -56,9 +56,10 @@ $.animateJs.extractStyles = function (workingAttr) {
     }
     if ($currentStyle.length)
         $style.push($currentStyle);
-    console.log($style.length);
-    for( i=0;i<$style.length; i++)
-        console.log($style[i]);
+    //console.log($style.length);
+    //for( i=0;i<$style.length; i++)
+    //    console.log($style[i]);
+    return $style;
 };
 ///#source 1 1 /src/scripts/init.js
 $.animateJs.init = function (options, elem) {
@@ -79,7 +80,7 @@ $.animateJs.init = function (options, elem) {
     this.elem.text("hello world");
     this.attrValue = this.elem.attr(this.options.workingAttr);
     var $actionList = this.extractStyles(this.attrValue);
-
+    console.log($actionList);
     this.myMethod();
     // return this so that we can chain and use the bridge with less code.
     return this;
