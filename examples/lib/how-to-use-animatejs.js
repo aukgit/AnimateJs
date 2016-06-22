@@ -6,4 +6,5 @@ $(function () {
     //var res = str.replace(/\(./gi, "*");
     //console.log(res);
     $(".a-js").animateJs();
+    //console.log(misc("dur", "dur(23)"));
 });
