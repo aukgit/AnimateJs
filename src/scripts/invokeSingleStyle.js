@@ -1,0 +1,3 @@
+﻿$.animateJs.invokeSingleStyle = function (styleString) {
+
+};

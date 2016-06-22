@@ -19,46 +19,45 @@ $.animateJs.extractActions = function (working_attr) {
     working_attr = working_attr.replace(/\./g, "+");// replace all "." by +
     working_attr = working_attr.replace(/\*/g, "(.");//replace all "*" by "(." 
     var $actions = working_attr.split("+");
-    console.log($actions);
     return $actions;
 };
 ///#source 1 1 /src/scripts/extractStyles.js
 $.animateJs.extractStyles = function (workingAttr) {
-    console.log("hello there!!");
     var $steps = this.extractActions(workingAttr);
-    console.log($steps);
-    console.log($steps.length);
     var $selectorStyle = false;
+    var $gotOne = false;
     var $style = [];
     var $currentStyle = "";
-    //console.log(this.elem);
     for (var i = 0; i < $steps.length; i++) {
-        if ($steps[i].indexOf("selector(")>-1) {
-            if ($currentStyle.length)
+        if ($steps[i].indexOf(""+this.options.selection+"(")>-1) {// a selector,start of a new style
+            if ($gotOne) {
                 $style.push($currentStyle);
+            }
             $currentStyle = ""+$steps[i];
             $selectorStyle = true;
+            $gotOne = true;
+
         }
 
-        else if ($steps[i].indexOf("(") > -1) {
+        else if ($steps[i].indexOf("(") > -1) {//a normal function, will be concatenated with the current style
             $currentStyle = $currentStyle +"."+ $steps[i];
         }
 
-        else if ($selectorStyle) {
+        else if ($selectorStyle) {//a class after the selector, will be concatenated with the current style
             $currentStyle = $currentStyle +"."+ $steps[i];
             $selectorStyle = false;
-        } else {
-            if ($currentStyle.length)
+        } else {//A class without any preceeding selector, start of a new style
+            if ($gotOne) {
                 $style.push($currentStyle);
+                //$gotOne = true;
+            }
             $currentStyle = "" + $steps[i];
             $selectorStyle = false;
+            $gotOne = true;
         }
     }
-    if ($currentStyle.length)
+    if ($gotOne)
         $style.push($currentStyle);
-    //console.log($style.length);
-    //for( i=0;i<$style.length; i++)
-    //    console.log($style[i]);
     return $style;
 };
 ///#source 1 1 /src/scripts/init.js
