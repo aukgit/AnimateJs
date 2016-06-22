@@ -10,9 +10,12 @@
   </settings>
   <!--The order of the <file> elements determines the order of the files in the bundle.-->
   <files>
-    <file>/scripts/Animation/animateJs.js</file>
-    <file>/scripts/Animation/Attributes.js</file>
-    <file>/scripts/Animation/init.js</file>
-    <file>/scripts/Animation/myMethod.js</file> 
+    <file>/src/scripts/animateJs.js</file>
+    <file>/src/scripts/Attributes.js</file>
+    <file>/src/scripts/extractActions.js</file>
+    <file>/src/scripts/extractStyles.js</file>
+    <file>/src/scripts/init.js</file>
+    <file>/src/scripts/myMethod.js</file>
+    <file>/src/scripts/inject.js</file>
   </files>
 </bundle> 
