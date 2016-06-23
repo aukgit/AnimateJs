@@ -13,6 +13,7 @@
     <file>/src/scripts/animateJs.js</file>
     <file>/src/scripts/Attributes.js</file>
     <file>/src/scripts/extractActions.js</file>
+    <file>/src/scripts/global_getParameterValue.js</file>
     <file>/src/scripts/extractStyles.js</file>
     <file>/src/scripts/init.js</file>
     <file>/src/scripts/myMethod.js</file>

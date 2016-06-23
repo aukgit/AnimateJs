@@ -15,51 +15,38 @@ $.animateJs.options = {
 };
 ///#source 1 1 /src/scripts/extractActions.js
 $.animateJs.extractActions = function (working_attr) {
+    /// <summary>
+    /// extracts the series of steps to be taken from a given string
+    /// </summary>
+    /// <param name="working_attr" type="type"></param>
+    /// <returns type=""></returns>
     working_attr = working_attr.replace(/\(\./g, "*");//replace all "(." by *
     working_attr = working_attr.replace(/\./g, "+");// replace all "." by +
     working_attr = working_attr.replace(/\*/g, "(.");//replace all "*" by "(." 
     var $actions = working_attr.split("+");
     return $actions;
 };
-///#source 1 1 /src/scripts/extractStyles.js
-misc = function($functionName, $functionWithParameter) {
-    var $start = $functionWithParameter.indexOf($functionName + "(") + $functionName.length+1;
+///#source 1 1 /src/scripts/global_getParameterValue.js
+getParameterValue = function ($functionName, $functionWithParameter) {
+    /// <summary>
+    /// Give the function with parameter string and the name of the function, this method will return whats inside the parameter, works only for functions with single parameter
+    /// </summary>
+    /// <param name="$functionName" type="type"></param>
+    /// <param name="$functionWithParameter" type="type"></param>
+    /// <returns type=""></returns>
+    var $start = $functionWithParameter.indexOf($functionName + "(") + $functionName.length + 1;
     var $end = $functionWithParameter.indexOf(")");
     var $value = $functionWithParameter.substr($start, $end - $start);
     return $value;
 };
-getParameterValue = function ($step, $currentStyle) {
-    //var $start = 0, $end = 0;
-    //var $value = -1, $functionName="";
-    if ($step.indexOf(this.options.animation_delay) > -1) {
-        $currentStyle.delay=misc(this.options.animation_delay,$step);
-        //$value = 
-    }
-    
-    else if ($step.indexOf(this.options.animation_duration) > -1) {
-        $currentStyle.duration = misc(this.options.animation_duration, $step);
-        
-    }
-
-    else if ($step.indexOf(this.options.animation_iteration_count) > -1) {
-        $currentStyle.iteration = misc(this.options.animation_iteration_count, $step);
-        
-    }
-    return $currentStyle;
-};
-
-initiateCurrentStyle = function () {
-    var $initialStyle = {
-        selection: null,
-        style: null,
-        delay: 0,
-        iteration: 1,
-        duration: 1
-    };
-    return $initialStyle;
-
-};
+///#source 1 1 /src/scripts/extractStyles.js
 $.animateJs.extractStyles = function (workingAttr) {
+    /// <summary>
+    /// extracts specific style operations to perform and returns the style summary in an array of json objects
+    /// </summary>
+    /// <param name="workingAttr" type="type"></param>
+    /// <returns type="">array of json object with selection, delay, duration, iteration as value</returns>
+
     var $steps = this.extractActions(workingAttr);
     var $selectorStyle = false;
     var $gotOne = false;
@@ -71,14 +58,14 @@ $.animateJs.extractStyles = function (workingAttr) {
                 $style.push($currentStyle);
             }
             $currentStyle = initiateCurrentStyle();
-            $currentStyle.selection = "" + $steps[i];
+            $currentStyle.selection = "" + getParameterValue(this.options.selection, $steps[i]);
             $selectorStyle = true;
             $gotOne = true;
 
         }
 
         else if ($steps[i].indexOf("(") > -1) {//a normal function, will be concatenated with the current style
-            $currentStyle = getParameterValue($steps[i], $currentStyle);
+            $currentStyle = this._getParameterNameAndValue($steps[i], $currentStyle);
         }
 
         else if ($selectorStyle) {//a class after the selector, will be concatenated with the current style
@@ -98,6 +85,36 @@ $.animateJs.extractStyles = function (workingAttr) {
         $style.push($currentStyle);
     return $style;
 };
+
+$.animateJs._getParameterNameAndValue = function ($step, $currentStyle) {
+    if ($step.indexOf(this.options.animation_delay) > -1) {
+        $currentStyle.delay = getParameterValue(this.options.animation_delay, $step).toString();
+        //$value = 
+    }
+
+    else if ($step.indexOf(this.options.animation_duration) > -1) {
+        $currentStyle.duration = getParameterValue(this.options.animation_duration, $step).toString();
+
+    }
+
+    else if ($step.indexOf(this.options.animation_iteration_count) > -1) {
+        $currentStyle.iteration = getParameterValue(this.options.animation_iteration_count, $step).toString();
+    }
+    return $currentStyle;
+};
+
+initiateCurrentStyle = function () {
+    var $initialStyle = {
+        selection: null,
+        style: null,
+        delay: "0",
+        iteration: "1",
+        duration: "1"
+    };
+    return $initialStyle;
+
+};
+
 ///#source 1 1 /src/scripts/init.js
 $.animateJs.init = function (options, elem) {
     /// <summary>
