@@ -29,7 +29,7 @@ function testAnim(x, iterationCount, animationDuration) {
     //$v.css("animation-iteration-count", "3");
 
     //$v.css("animation-iteration-count", iterationCount.toString());
-    //$v.css("animation-duration", animationDuration.toString());
+    $v.css("animation-duration", animationDuration.toString());
 
     //$v.css("animation-duration", animationDuration.toString());
     //$var.css("animation-iteration-count", "20");

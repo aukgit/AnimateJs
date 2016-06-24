@@ -16,6 +16,7 @@
 /packages/*/lib/*/*.dll
 # Include dlls if they're in the CommonReferences directory
 !*CommonReferences/*.dll
+!Excelfiles
 ####################
 # VS Upgrade stuff #
 ####################

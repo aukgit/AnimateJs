@@ -8,10 +8,28 @@ $.animateJs = {}; //json , class or object.
 ///#source 1 1 /src/scripts/Attributes.js
 $.animateJs.options = {
     workingAttr: "data-animate",
-    animation_iteration_count: "itr",
-    animation_duration: "dur",
-    animation_delay: "delay",
-    selection: "selector"
+    reflections: {
+        animation_iteration_count: {
+            call: "repeat",
+            names: ["repeat", "itr", "repeat", "Itr"]
+        },
+        animation_duration: {
+            call: "duration",
+            names: ["duration", "dur", "Delay", "Dur"]
+        },
+        animation_delay: {
+            call: "delay",
+            names: ["delay ","Delay"]
+        },
+        selection: {
+            call: "select",
+            names:["selection", "select", "Select"]
+        }
+
+    },
+    
+    seperator: "->",
+    multi:"+"
 };
 ///#source 1 1 /src/scripts/extractActions.js
 $.animateJs.extractActions = function (working_attr) {
@@ -20,10 +38,9 @@ $.animateJs.extractActions = function (working_attr) {
     /// </summary>
     /// <param name="working_attr" type="type"></param>
     /// <returns type=""></returns>
-    working_attr = working_attr.replace(/\(\./g, "*");//replace all "(." by *
-    working_attr = working_attr.replace(/\./g, "+");// replace all "." by +
-    working_attr = working_attr.replace(/\*/g, "(.");//replace all "*" by "(." 
-    var $actions = working_attr.split("+");
+   
+    var $actions = working_attr.split(this.options.seperator);
+    console.log($actions);
     return $actions;
 };
 ///#source 1 1 /src/scripts/global_getParameterValue.js
@@ -39,6 +56,19 @@ getParameterValue = function ($functionName, $functionWithParameter) {
     var $value = $functionWithParameter.substr($start, $end - $start);
     return $value;
 };
+///#source 1 1 /src/scripts/currentStyleJson.js
+$.animateJs.initiateCurrentStyle = function () {
+    var $initialStyle = {
+        selection: null,
+        style: null,
+        delay: "0",
+        iteration: "1",
+        duration: "1"
+    };
+    return $initialStyle;
+
+};
+
 ///#source 1 1 /src/scripts/extractStyles.js
 $.animateJs.extractStyles = function (workingAttr) {
     /// <summary>
@@ -51,69 +81,69 @@ $.animateJs.extractStyles = function (workingAttr) {
     var $selectorStyle = false;
     var $gotOne = false;
     var $style = [];
-    var $currentStyle = "";
+    var $simultaneousStyles = [];
+    var $nowStyle = "";
     for (var i = 0; i < $steps.length; i++) {
+
         if ($steps[i].indexOf("" + this.options.selection + "(") > -1) {// a selector,start of a new style
             if ($gotOne) {
-                $style.push($currentStyle);
+                $simultaneousStyles.push($nowStyle);
+                $style.push($simultaneousStyles);
             }
-            $currentStyle = initiateCurrentStyle();
-            $currentStyle.selection = "" + getParameterValue(this.options.selection, $steps[i]);
+            $nowStyle = initiateCurrentStyle();
+            $simultaneousStyles = [];
+            $nowStyle.selection = "" + getParameterValue(this.options.selection, $steps[i]);
             $selectorStyle = true;
             $gotOne = true;
 
         }
 
         else if ($steps[i].indexOf("(") > -1) {//a normal function, will be concatenated with the current style
-            $currentStyle = this._getParameterNameAndValue($steps[i], $currentStyle);
+            $nowStyle = this._getParameterNameAndValue($steps[i], $nowStyle);
         }
 
         else if ($selectorStyle) {//a class after the selector, will be concatenated with the current style
-            $currentStyle.style = $steps[i];
+            $nowStyle.style = $steps[i];
             $selectorStyle = false;
         } else {//A class without any preceding selector, start of a new style
             if ($gotOne) {
-                $style.push($currentStyle);
+                $simultaneousStyles.push($nowStyle);
+                $style.push($simultaneousStyles);
             }
-            $currentStyle = initiateCurrentStyle();
-            $currentStyle.style = "" + $steps[i];
+            $nowStyle = initiateCurrentStyle();
+            $simultaneousStyles = [];
+            $nowStyle.style = "" + $steps[i];
             $selectorStyle = false;
             $gotOne = true;
         }
     }
-    if ($gotOne)
-        $style.push($currentStyle);
+    if ($gotOne) {
+        $simultaneousStyles.push($nowStyle);
+        $style.push($simultaneousStyles);
+    }
     return $style;
 };
 
-$.animateJs._getParameterNameAndValue = function ($step, $currentStyle) {
+$.animateJs._getParameterNameAndValue = function ($step, $nowStyle) {
+    if ($step.indexOf("(") < 0) {
+        $nowStyle.style = $step;
+    }
     if ($step.indexOf(this.options.animation_delay) > -1) {
-        $currentStyle.delay = getParameterValue(this.options.animation_delay, $step).toString();
+        $nowStyle.delay = getParameterValue(this.options.animation_delay, $step).toString();
         //$value = 
     }
 
     else if ($step.indexOf(this.options.animation_duration) > -1) {
-        $currentStyle.duration = getParameterValue(this.options.animation_duration, $step).toString();
+        $nowStyle.duration = getParameterValue(this.options.animation_duration, $step).toString();
 
     }
 
     else if ($step.indexOf(this.options.animation_iteration_count) > -1) {
-        $currentStyle.iteration = getParameterValue(this.options.animation_iteration_count, $step).toString();
+        $nowStyle.iteration = getParameterValue(this.options.animation_iteration_count, $step).toString();
     }
-    return $currentStyle;
+    return $nowStyle;
 };
 
-initiateCurrentStyle = function () {
-    var $initialStyle = {
-        selection: null,
-        style: null,
-        delay: "0",
-        iteration: "1",
-        duration: "1"
-    };
-    return $initialStyle;
-
-};
 
 ///#source 1 1 /src/scripts/init.js
 $.animateJs.init = function (options, elem) {
@@ -125,6 +155,9 @@ $.animateJs.init = function (options, elem) {
     /// <returns type=""></returns>
     
     // Mix in the passed-in options with the default options
+    String.prototype.replaceAll = function (str1, str2, ignore) {
+        return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, "\\$&"), (ignore ? "gi" : "g")), (typeof (str2) == "string") ? str2.replace(/\$/g, "$$$$") : str2);
+    }
     this.options = $.extend({}, this.options, options);
 
     // Save the element reference, both as a jQuery
@@ -141,13 +174,13 @@ $.animateJs.init = function (options, elem) {
 }
 
 ///#source 1 1 /src/scripts/myMethod.js
-$.animateJs.myMethod = function (msg) {
-    // You have direct access to the associated and cached
-    // jQuery element
-    console.log("myMethod triggered");
+//$.animateJs.task.Process.itr = function (msg) {
+//    // You have direct access to the associated and cached
+//    // jQuery element
+//    console.log("myMethod triggered");
 
-    // this.$elem.append('<p>'+msg+'</p>');
-}
+//    // this.$elem.append('<p>'+msg+'</p>');
+//}
 ///#source 1 1 /src/scripts/inject.js
 // Object.create support test, and fallback for browsers without it
 if (typeof Object.create !== "function") {
