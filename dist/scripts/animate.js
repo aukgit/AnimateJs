@@ -170,8 +170,12 @@ $.animateJs.extractStyles = function (workingAttr) {
 };
 
 ///#source 1 1 /src/scripts/applySingleStyle.js
-$.animateJs.applySingleStyle = function ($element,styleString) {
-
+$.animateJs.applySingleStyle = function ($element,styleJson) {
+    $element.css({
+        "animation-delay": styleJson.delay.toString(),
+        "animation-duration": styleJson.duration.toString(),
+        "animation-iteration-count":styleJson.iteration.toString()
+});
 };
 ///#source 1 1 /src/scripts/init.js
 $.animateJs.init = function (options, elem) {
