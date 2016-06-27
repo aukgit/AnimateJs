@@ -63,7 +63,7 @@ $.animateJs.getFuncName = function ($step) {
     }
 };
 
-///#source 1 1 /src/scripts/currentStyleJson.js
+///#source 1 1 /src/scripts/initiateCurrentStyle.js
 $.animateJs.initiateCurrentStyle = function () {
     var $initialStyle = {
         selection: null,
@@ -169,6 +169,10 @@ $.animateJs.extractStyles = function (workingAttr) {
     return style;
 };
 
+///#source 1 1 /src/scripts/applySingleStyle.js
+$.animateJs.applySingleStyle = function ($element,styleString) {
+
+};
 ///#source 1 1 /src/scripts/init.js
 $.animateJs.init = function (options, elem) {
     /// <summary>
