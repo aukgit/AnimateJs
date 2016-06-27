@@ -23,7 +23,7 @@ $.animateJs.options = {
             },
             selection: {
                 called: "select",
-                names: ["selection", "select", "Select", "Selection"]
+                names: ["selection", "select","selector", "Select", "Selection", "Selector"]
             }
         },
         seperator: "->",
@@ -128,7 +128,7 @@ $.animateJs.extractStyles = function (workingAttr) {
                     nowStyle = this.initiateCurrentStyle();
                     // ReSharper disable once UsageOfPossiblyUnassignedValue
                     nowStyle.style = funcAndStyle[1];
-                    nowStyle.selection = "" + simultaneousStyles[0].selection; //current style's selector would be the same as simultaneous selectors
+                    nowStyle.selection =  simultaneousStyles[0].selection; //current style's selector would be the same as simultaneous selectors
 
                 }
             }
@@ -142,13 +142,15 @@ $.animateJs.extractStyles = function (workingAttr) {
                 plusPresent = true;
             }
             if (!selectorStyle) { //style element, not preceded by selector, start of a new simultaneousStyles
-                if (gotOne) {//if this is the very first style, this condition will be false
+                if (gotOne) { //if this is the very first style, this condition will be false
                     simultaneousStyles.push(nowStyle);
                     style.push(simultaneousStyles);
                 }
                 simultaneousStyles = [];
                 gotOne = true;
                 nowStyle = this.initiateCurrentStyle();
+            } else {
+                selectorStyle = false;
             }
             nowStyle.style = splitStyle[0];
             if (plusPresent) {//style1+style2
@@ -188,7 +190,7 @@ $.animateJs.init = function (options, elem) {
     this.$elem = $(elem);
     this.elem.text("hello world");
     this.attrValue = this.elem.attr(this.options.workingAttr);
-    //console.log(this.attrValue);
+    console.log(this.attrValue);
     var $actionList = this.extractStyles(this.attrValue);
     console.log($actionList);
     // return this so that we can chain and use the bridge with less code.

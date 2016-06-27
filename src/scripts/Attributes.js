@@ -15,7 +15,7 @@
             },
             selection: {
                 called: "select",
-                names: ["selection", "select", "Select", "Selection"]
+                names: ["selection", "select","selector", "Select", "Selection", "Selector"]
             }
         },
         seperator: "->",

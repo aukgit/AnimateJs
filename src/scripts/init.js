@@ -18,7 +18,7 @@
     this.$elem = $(elem);
     this.elem.text("hello world");
     this.attrValue = this.elem.attr(this.options.workingAttr);
-    //console.log(this.attrValue);
+    console.log(this.attrValue);
     var $actionList = this.extractStyles(this.attrValue);
     console.log($actionList);
     // return this so that we can chain and use the bridge with less code.

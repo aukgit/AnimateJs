@@ -49,7 +49,7 @@
                     nowStyle = this.initiateCurrentStyle();
                     // ReSharper disable once UsageOfPossiblyUnassignedValue
                     nowStyle.style = funcAndStyle[1];
-                    nowStyle.selection = "" + simultaneousStyles[0].selection; //current style's selector would be the same as simultaneous selectors
+                    nowStyle.selection =  simultaneousStyles[0].selection; //current style's selector would be the same as simultaneous selectors
 
                 }
             }
@@ -63,13 +63,15 @@
                 plusPresent = true;
             }
             if (!selectorStyle) { //style element, not preceded by selector, start of a new simultaneousStyles
-                if (gotOne) {//if this is the very first style, this condition will be false
+                if (gotOne) { //if this is the very first style, this condition will be false
                     simultaneousStyles.push(nowStyle);
                     style.push(simultaneousStyles);
                 }
                 simultaneousStyles = [];
                 gotOne = true;
                 nowStyle = this.initiateCurrentStyle();
+            } else {
+                selectorStyle = false;
             }
             nowStyle.style = splitStyle[0];
             if (plusPresent) {//style1+style2
