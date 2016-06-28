@@ -22,10 +22,9 @@
         this.attrValue = options;
     }
 
-    //this.elem.text("hello world");
     console.log(this.attrValue);
-    var $actionList = this.stringManipulation.extractStyles(this.attrValue);
-    console.log($actionList);
+    var actionList = this.stringManipulation.extractStyles(this.attrValue);
+    console.log(actionList);
     // return this so that we can chain and use the bridge with less code.
     return this;
 }
