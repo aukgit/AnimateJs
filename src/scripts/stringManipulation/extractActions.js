@@ -1,4 +1,4 @@
-﻿$.animateJs.extractActions = function (workingAttr) {
+﻿$.animateJs.stringManipulation.extractActions = function (workingAttr) {
     /// <summary>
     /// extracts the series of steps to be taken from a given string
     /// </summary>

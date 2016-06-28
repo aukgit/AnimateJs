@@ -1,4 +1,4 @@
-﻿$.animateJs.options = {
+﻿$.animateJs.stringManipulation.options = {
         workingAttr: "data-animate",
         reflections: {
             iteration: {

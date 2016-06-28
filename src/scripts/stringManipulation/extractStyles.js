@@ -1,4 +1,4 @@
-﻿$.animateJs.extractStyles = function (workingAttr) {
+﻿$.animateJs.stringManipulation.extractStyles = function (workingAttr) {
     /// <summary>
     /// extracts specific style operations to perform and returns the style summary in an array of json objects
     /// </summary>

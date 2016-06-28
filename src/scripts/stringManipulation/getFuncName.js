@@ -1,4 +1,4 @@
-﻿$.animateJs.getFuncName = function ($step) {
+﻿$.animateJs.stringManipulation.getFuncName = function ($step) {
     var reflections = this.options.reflections;
     var attrName,names;
     var keys = Object.keys(reflections);

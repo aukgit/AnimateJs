@@ -1,4 +1,4 @@
-﻿$.animateJs.initiateCurrentStyle = function () {
+﻿$.animateJs.stringManipulation.initiateCurrentStyle = function () {
     var $initialStyle = {
         selection: null,
         style: null,

@@ -11,13 +11,13 @@
   <!--The order of the <file> elements determines the order of the files in the bundle.-->
   <files>
     <file>/src/scripts/animateJs.js</file>
-    <file>/src/scripts/Attributes.js</file>
-    <file>/src/scripts/extractActions.js</file>
-    <file>/src/scripts/getParameterValue.js</file>
-    <file>/src/scripts/getFuncName.js</file>
-    <file>/src/scripts/initiateCurrentStyle.js</file>
-    <file>/src/scripts/extractStyles.js</file>
-
+    <file>/src/scripts/stringmanipulation/stringmanipulation.js</file>
+    <file>/src/scripts/stringmanipulation/Attributes.js</file>
+    <file>/src/scripts/stringmanipulation/extractActions.js</file>
+    <file>/src/scripts/stringmanipulation/getParameterValue.js</file>
+    <file>/src/scripts/stringmanipulation/getFuncName.js</file>
+    <file>/src/scripts/stringmanipulation/initiateCurrentStyle.js</file>
+    <file>/src/scripts/stringmanipulation/extractStyles.js</file>
     <file>/src/scripts/applySingleStyle.js</file>
     <file>/src/scripts/init.js</file>
     <file>/src/scripts/myMethod.js</file>

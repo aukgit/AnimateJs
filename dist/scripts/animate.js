@@ -5,8 +5,10 @@
  */
 $.animateJs = {}; //json , class or object.
 
-///#source 1 1 /src/scripts/Attributes.js
-$.animateJs.options = {
+///#source 1 1 /src/scripts/stringmanipulation/stringmanipulation.js
+$.animateJs.stringManipulation = {};
+///#source 1 1 /src/scripts/stringmanipulation/Attributes.js
+$.animateJs.stringManipulation.options = {
         workingAttr: "data-animate",
         reflections: {
             iteration: {
@@ -33,8 +35,8 @@ $.animateJs.options = {
         seperator: "->",
         multi: "+"
 };
-///#source 1 1 /src/scripts/extractActions.js
-$.animateJs.extractActions = function (workingAttr) {
+///#source 1 1 /src/scripts/stringmanipulation/extractActions.js
+$.animateJs.stringManipulation.extractActions = function (workingAttr) {
     /// <summary>
     /// extracts the series of steps to be taken from a given string
     /// </summary>
@@ -45,16 +47,16 @@ $.animateJs.extractActions = function (workingAttr) {
     console.log($actions);
     return $actions;
 };
-///#source 1 1 /src/scripts/getParameterValue.js
-$.animateJs.getParameterValue = function ($functionWithParameter) {
+///#source 1 1 /src/scripts/stringmanipulation/getParameterValue.js
+$.animateJs.stringManipulation.getParameterValue = function ($functionWithParameter) {
 
     var start = $functionWithParameter.indexOf("(") + 1;
     var end = $functionWithParameter.indexOf(")");
     var $value = $functionWithParameter.substr(start, end - start);
     return $value;
 };
-///#source 1 1 /src/scripts/getFuncName.js
-$.animateJs.getFuncName = function ($step) {
+///#source 1 1 /src/scripts/stringmanipulation/getFuncName.js
+$.animateJs.stringManipulation.getFuncName = function ($step) {
     var reflections = this.options.reflections;
     var attrName,names;
     var keys = Object.keys(reflections);
@@ -70,8 +72,8 @@ $.animateJs.getFuncName = function ($step) {
     }
 };
 
-///#source 1 1 /src/scripts/initiateCurrentStyle.js
-$.animateJs.initiateCurrentStyle = function () {
+///#source 1 1 /src/scripts/stringmanipulation/initiateCurrentStyle.js
+$.animateJs.stringManipulation.initiateCurrentStyle = function () {
     var $initialStyle = {
         selection: null,
         style: null,
@@ -84,8 +86,8 @@ $.animateJs.initiateCurrentStyle = function () {
 
 };
 
-///#source 1 1 /src/scripts/extractStyles.js
-$.animateJs.extractStyles = function (workingAttr) {
+///#source 1 1 /src/scripts/stringmanipulation/extractStyles.js
+$.animateJs.stringManipulation.extractStyles = function (workingAttr) {
     /// <summary>
     /// extracts specific style operations to perform and returns the style summary in an array of json objects
     /// </summary>
@@ -199,7 +201,7 @@ $.animateJs.init = function (options, elem) {
     String.prototype.replaceAll = function (str1, str2, ignore) {
         return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, "\\$&"), (ignore ? "gi" : "g")), (typeof (str2) == "string") ? str2.replace(/\$/g, "$$$$") : str2);
     }
-    this.options = $.extend({}, this.options, options);
+    this.options = $.extend({}, this.stringManipulation.options, options);
 
     // Save the element reference, both as a jQuery
     // reference and a normal reference
@@ -208,9 +210,9 @@ $.animateJs.init = function (options, elem) {
     this.elem = elem;
     this.$elem = $(elem);
     this.elem.text("hello world");
-    this.attrValue = this.elem.attr(this.options.workingAttr);
+    this.attrValue = this.elem.attr(this.stringManipulation.options.workingAttr);
     console.log(this.attrValue);
-    var $actionList = this.extractStyles(this.attrValue);
+    var $actionList = this.stringManipulation.extractStyles(this.attrValue);
     console.log($actionList);
     // return this so that we can chain and use the bridge with less code.
     return this;

@@ -1,4 +1,4 @@
-﻿$.animateJs.getParameterValue = function ($functionWithParameter) {
+﻿$.animateJs.stringManipulation.getParameterValue = function ($functionWithParameter) {
 
     var start = $functionWithParameter.indexOf("(") + 1;
     var end = $functionWithParameter.indexOf(")");
