@@ -204,19 +204,22 @@ $.animateJs.init = function (options, elem) {
     /// <returns type=""></returns>
     
     // Mix in the passed-in options with the default options
+// ReSharper disable once NativeTypePrototypeExtending
     String.prototype.replaceAll = function (str1, str2, ignore) {
         return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, "\\$&"), (ignore ? "gi" : "g")), (typeof (str2) == "string") ? str2.replace(/\$/g, "$$$$") : str2);
     }
-    this.options = $.extend({}, this.stringManipulation.options, options);
-
-    // Save the element reference, both as a jQuery
-    // reference and a normal reference
-
-
     this.elem = elem;
     this.$elem = $(elem);
-    this.elem.text("hello world");
-    this.attrValue = this.elem.attr(this.stringManipulation.options.workingAttr);
+
+    if (typeof options !== "string") {
+        this.stringManipulation.options = $.extend({}, this.stringManipulation.options, options);
+        this.attrValue = this.elem.attr(this.stringManipulation.options.workingAttr);
+    }
+    else {
+        this.attrValue = options;
+    }
+
+    //this.elem.text("hello world");
     console.log(this.attrValue);
     var $actionList = this.stringManipulation.extractStyles(this.attrValue);
     console.log($actionList);
