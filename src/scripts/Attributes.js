@@ -16,6 +16,10 @@
             selection: {
                 called: "select",
                 names: ["selection", "select","selector", "Select", "Selection", "Selector"]
+            },
+            remove: {
+                called: "remove",
+                names:["remove", "delete", "Remove", "Delete"]
             }
         },
         seperator: "->",

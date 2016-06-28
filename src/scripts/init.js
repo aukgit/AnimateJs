@@ -14,6 +14,8 @@
 
     // Save the element reference, both as a jQuery
     // reference and a normal reference
+
+
     this.elem = elem;
     this.$elem = $(elem);
     this.elem.text("hello world");

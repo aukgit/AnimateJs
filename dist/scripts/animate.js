@@ -24,6 +24,10 @@ $.animateJs.options = {
             selection: {
                 called: "select",
                 names: ["selection", "select","selector", "Select", "Selection", "Selector"]
+            },
+            remove: {
+                called: "remove",
+                names:["remove", "delete", "Remove", "Delete"]
             }
         },
         seperator: "->",
@@ -70,7 +74,8 @@ $.animateJs.initiateCurrentStyle = function () {
         style: null,
         delay: "0",
         iteration: "1",
-        duration: "1"
+        duration: "1",
+        remove:false
     };
     return $initialStyle;
 
@@ -108,6 +113,11 @@ $.animateJs.extractStyles = function (workingAttr) {
                 nowStyle = this.initiateCurrentStyle();
                 nowStyle.selection = "" + funcValue;
             }
+
+            else if (funcName === this.options.reflections.remove.called) {
+                nowStyle.remove = true;
+            }
+
             else { //a normal function, might or mightn't have a "+" with it
                 selectorStyle = false;
                 var styleFunc = "";
@@ -128,12 +138,12 @@ $.animateJs.extractStyles = function (workingAttr) {
                     nowStyle = this.initiateCurrentStyle();
                     // ReSharper disable once UsageOfPossiblyUnassignedValue
                     nowStyle.style = funcAndStyle[1];
-                    nowStyle.selection =  simultaneousStyles[0].selection; //current style's selector would be the same as simultaneous selectors
+                    nowStyle.selection = simultaneousStyles[0].selection; //current style's selector would be the same as simultaneous selectors
 
                 }
             }
         }
-  
+
         else {//got a style element, it might or mightn't be preceded by selector and might or mightn't have a "+" with it
             var splitStyle = steps[i].split("+");//if it has a "+" with it splitStyle.length=2 otherwise splitStyle.length=1
             if (splitStyle.length === 1)
@@ -194,6 +204,8 @@ $.animateJs.init = function (options, elem) {
 
     // Save the element reference, both as a jQuery
     // reference and a normal reference
+
+
     this.elem = elem;
     this.$elem = $(elem);
     this.elem.text("hello world");
