@@ -34,14 +34,14 @@ $.animateJs.options = {
         multi: "+"
 };
 ///#source 1 1 /src/scripts/extractActions.js
-$.animateJs.extractActions = function (working_attr) {
+$.animateJs.extractActions = function (workingAttr) {
     /// <summary>
     /// extracts the series of steps to be taken from a given string
     /// </summary>
     /// <param name="working_attr" type="type"></param>
     /// <returns type=""></returns>
    
-    var $actions = working_attr.split(this.options.seperator);
+    var $actions = workingAttr.split(this.options.seperator);
     console.log($actions);
     return $actions;
 };
@@ -55,13 +55,16 @@ $.animateJs.getParameterValue = function ($functionWithParameter) {
 };
 ///#source 1 1 /src/scripts/getFuncName.js
 $.animateJs.getFuncName = function ($step) {
-    //console.log(this.);
-    var keys = Object.keys(this.options.reflections);
+    var reflections = this.options.reflections;
+    var attrName,names;
+    var keys = Object.keys(reflections);
     for (var i = 0; i < keys.length; i++) {
-        for (var j = 0; j < this.options.reflections[keys[i]].names.length; j++) {
-            var paramStart = this.options.reflections[keys[i]].names[j] + "(";
+        attrName = reflections[keys[i]];
+        names = attrName.names;
+        for (var j = 0; j < names.length; j++) {
+            var paramStart = names[j] + "(";
             if ($step.indexOf(paramStart) > -1) {
-                return this.options.reflections[keys[i]].called;
+                return attrName.called;
             }
         }
     }
@@ -89,7 +92,7 @@ $.animateJs.extractStyles = function (workingAttr) {
     /// <param name="workingAttr" type="type"></param>
     /// <returns type="">array of json object with selection, delay, duration, iteration as value</returns>
 
-    var steps = this.extractActions(workingAttr);
+    var tasks = this.extractActions(workingAttr);
     var selectorStyle = false;
     var gotOne = false;
     var style = [];
@@ -98,10 +101,10 @@ $.animateJs.extractStyles = function (workingAttr) {
     var nowStyle = "";
     var funcName;
     var funcValue;
-    for (var i = 0; i < steps.length; i++) {
-        if (steps[i].indexOf("(") > -1) {
-            funcName = this.getFuncName(steps[i]);
-            funcValue = this.getParameterValue(steps[i]);
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].indexOf("(") > -1) {
+            funcName = this.getFuncName(tasks[i]);
+            funcValue = this.getParameterValue(tasks[i]);
             if (funcName === this.options.reflections.selection.called) {// a selector,start of a new style
                 if (gotOne) {
                     simultaneousStyles.push(nowStyle);
@@ -112,21 +115,17 @@ $.animateJs.extractStyles = function (workingAttr) {
                 selectorStyle = true;
                 nowStyle = this.initiateCurrentStyle();
                 nowStyle.selection = "" + funcValue;
-            }
-
-            else if (funcName === this.options.reflections.remove.called) {
+            } else if (funcName === this.options.reflections.remove.called) {
                 nowStyle.remove = true;
-            }
-
-            else { //a normal function, might or mightn't have a "+" with it
+            } else { //a normal function, might or mightn't have a "+" with it
                 selectorStyle = false;
                 var styleFunc = "";
                 plusPresent = false;
                 var funcAndStyle;
-                if (steps[i].indexOf("+") < 0) { //no "+" symbol found
-                    styleFunc = steps[i];
+                if (tasks[i].indexOf("+") < 0) { //no "+" symbol found
+                    styleFunc = tasks[i];
                 } else { //"+" symbol found
-                    funcAndStyle = steps[i].split("+");
+                    funcAndStyle = tasks[i].split("+");
                     styleFunc = funcAndStyle[0];
                     plusPresent = true;
                 }
@@ -145,7 +144,7 @@ $.animateJs.extractStyles = function (workingAttr) {
         }
 
         else {//got a style element, it might or mightn't be preceded by selector and might or mightn't have a "+" with it
-            var splitStyle = steps[i].split("+");//if it has a "+" with it splitStyle.length=2 otherwise splitStyle.length=1
+            var splitStyle = tasks[i].split("+");//if it has a "+" with it splitStyle.length=2 otherwise splitStyle.length=1
             if (splitStyle.length === 1)
                 plusPresent = false;
             else {
