@@ -10,20 +10,19 @@
     var gotOne = false;
     var style = [];
     var simultaneousStyles = [];
-    var plusPresent;
     var nowStyle = "";
     var funcName;
     var funcValue;
-    var hasPlus;
+    var isFunc;
     var splitStyle;
     var isJoin;
     for (var i = 0; i < tasks.length; i++) {
         if (tasks[i].indexOf("(") > -1)
-            hasPlus = true;
+            isFunc = true;
         else {
-            hasPlus = false;
+            isFunc = false;
         }
-        if (hasPlus) {
+        if (isFunc) {
             funcName = this.getFuncName(tasks[i]);
             funcValue = this.getParameterValue(tasks[i]);
             if (funcName === this.options.reflections.selection.called) {// a selector,start of a new style
