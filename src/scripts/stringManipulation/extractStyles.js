@@ -6,6 +6,7 @@
     /// <returns type="">array of json object with selection, delay, duration, iteration as value</returns>
 
     var tasks = this.extractActions(workingAttr);
+    console.log(tasks);
     var selectorStyle = false;
     var gotOne = false;
     var style = [];
@@ -77,7 +78,9 @@
                 simultaneousStyles = [];
                 gotOne = true;
                 nowStyle = this.initiateCurrentStyle();
+                //SVGAnimatedStringASD;
             } else {
+                gotOne = true;
                 selectorStyle = false;
             }
             nowStyle.style = splitStyle[0];

@@ -98,6 +98,7 @@ $.animateJs.stringManipulation.extractStyles = function (workingAttr) {
     /// <returns type="">array of json object with selection, delay, duration, iteration as value</returns>
 
     var tasks = this.extractActions(workingAttr);
+    console.log(tasks);
     var selectorStyle = false;
     var gotOne = false;
     var style = [];
@@ -169,7 +170,9 @@ $.animateJs.stringManipulation.extractStyles = function (workingAttr) {
                 simultaneousStyles = [];
                 gotOne = true;
                 nowStyle = this.initiateCurrentStyle();
+                //SVGAnimatedStringASD;
             } else {
+                gotOne = true;
                 selectorStyle = false;
             }
             nowStyle.style = splitStyle[0];
@@ -200,11 +203,12 @@ $.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson) 
 });
 };
 ///#source 1 1 /src/scripts/stylemanipulation/applysimultaneousstyle.js
+
 $.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultaneousAction, $element, isRemove) {
     var nowStyle = singleSimultaneousAction[0];
     var $newEle;
     this.applySingleStyle($element, singleSimultaneousAction[0]);
-    if (!remove && nowStyle.remove === true) {
+    if (!isRemove && nowStyle.remove === true) {
         isRemove = true;
     }
     singleSimultaneousAction.pop();
@@ -218,14 +222,23 @@ $.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultane
 }
 ///#source 1 1 /src/scripts/stylemanipulation/processactionlist.js
 $.animateJs.styleManipulation.processActionList = function (actionList, $element) {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="actionList" type="[arrayOfJsonObjects][jsonObjects]">list of all styles to implement</param>
+    /// <param name="$element" type="DOM element"></param>
+
     for (var i = 0; i < actionList.length; i++) {
         if (actionList[i][0].selection !== null) {
+            console.log("yes selection :(" + actionList[i]);
+
             $element = $element.find(actionList[i][0].selection);
             if ($element.length) {
                 //call all the nodes on the element with simulStyle method
             } 
             
         } else {
+            console.log("no selection :D" + actionList[i]);
             this.applySimultaneousStyle(actionList[i], $element, false);
         }
     }
@@ -258,6 +271,7 @@ $.animateJs.init = function (options, elem) {
     console.log(this.attrValue);
     var actionList = this.stringManipulation.extractStyles(this.attrValue);
     console.log(actionList);
+    //this.styleManipulation.processActionList(actionList,this.$elem);
     // return this so that we can chain and use the bridge with less code.
     return this;
 }
