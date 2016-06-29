@@ -44,7 +44,6 @@ $.animateJs.stringManipulation.extractActions = function (workingAttr) {
     /// <returns type=""></returns>
    
     var $actions = workingAttr.split(this.options.seperator);
-    console.log($actions);
     return $actions;
 };
 ///#source 1 1 /src/scripts/stringmanipulation/getParameterValue.js
@@ -186,14 +185,30 @@ $.animateJs.stringManipulation.extractStyles = function (workingAttr) {
     return style;
 };
 
-///#source 1 1 /src/scripts/applySingleStyle.js
-$.animateJs.applySingleStyle = function ($element,styleJson) {
+///#source 1 1 /src/scripts/stylemanipulation/stylemanipulation.js
+$.animateJs.styleManipulation = {};
+///#source 1 1 /src/scripts/stylemanipulation/applysinglestyle.js
+$.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson) {
     $element.css({
         "animation-delay": styleJson.delay.toString(),
         "animation-duration": styleJson.duration.toString(),
         "animation-iteration-count":styleJson.iteration.toString()
 });
 };
+///#source 1 1 /src/scripts/stylemanipulation/applysimultaneousstyle.js
+$.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultaneousAction) {
+    if (singleSimultaneousAction.length === 1) { //only 1 style to apply, no "+" symbol needed
+
+    } else {//DOM manipulation is needed
+        
+    }
+}
+///#source 1 1 /src/scripts/stylemanipulation/processactionlist.js
+$.animateJs.styleManipulation.processActionList = function (actionList) {
+    for (var i = 0; i < actionList.length; i++) {
+        
+    }
+}
 ///#source 1 1 /src/scripts/init.js
 $.animateJs.init = function (options, elem) {
     /// <summary>
@@ -237,19 +252,19 @@ $.animateJs.init = function (options, elem) {
 ///#source 1 1 /src/scripts/inject.js
 // Object.create support test, and fallback for browsers without it
 if (typeof Object.create !== "function") {
-    console.log("not a function named create");
+    //console.log("not a function named create");
     Object.create = function (o) {
         function F() { }
         F.prototype = o;
         return new F();
     };
 } else {
-    console.log("object.create is a function");
+    //console.log("object.create is a function");
 }
 
 // Create a plugin based on a defined object
 $.plugin = function (name, object) {
-    console.log("inside plugin script");
+    //console.log("inside plugin script");
     $.fn[name] = function (options) {
         return this.each(function () {
             if (!$.data(this, name)) {

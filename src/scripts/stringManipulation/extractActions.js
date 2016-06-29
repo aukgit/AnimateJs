@@ -6,6 +6,5 @@
     /// <returns type=""></returns>
    
     var $actions = workingAttr.split(this.options.seperator);
-    console.log($actions);
     return $actions;
 };

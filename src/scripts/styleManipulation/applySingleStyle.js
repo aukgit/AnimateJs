@@ -1,4 +1,4 @@
-﻿$.animateJs.applySingleStyle = function ($element,styleJson) {
+﻿$.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson) {
     $element.css({
         "animation-delay": styleJson.delay.toString(),
         "animation-duration": styleJson.duration.toString(),

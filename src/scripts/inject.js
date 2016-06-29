@@ -1,18 +1,18 @@
 ﻿// Object.create support test, and fallback for browsers without it
 if (typeof Object.create !== "function") {
-    console.log("not a function named create");
+    //console.log("not a function named create");
     Object.create = function (o) {
         function F() { }
         F.prototype = o;
         return new F();
     };
 } else {
-    console.log("object.create is a function");
+    //console.log("object.create is a function");
 }
 
 // Create a plugin based on a defined object
 $.plugin = function (name, object) {
-    console.log("inside plugin script");
+    //console.log("inside plugin script");
     $.fn[name] = function (options) {
         return this.each(function () {
             if (!$.data(this, name)) {

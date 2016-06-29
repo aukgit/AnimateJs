@@ -18,9 +18,14 @@
     <file>/src/scripts/stringmanipulation/getFuncName.js</file>
     <file>/src/scripts/stringmanipulation/initiateCurrentStyle.js</file>
     <file>/src/scripts/stringmanipulation/extractStyles.js</file>
-    <file>/src/scripts/applySingleStyle.js</file>
+
+    <file>/src/scripts/stylemanipulation/stylemanipulation.js</file>
+    <file>/src/scripts/stylemanipulation/applysinglestyle.js</file>
+    <file>/src/scripts/stylemanipulation/applysimultaneousstyle.js</file>
+    <file>/src/scripts/stylemanipulation/processactionlist.js</file>
+
     <file>/src/scripts/init.js</file>
     <file>/src/scripts/myMethod.js</file>
     <file>/src/scripts/inject.js</file>
   </files>
-</bundle> 
+</bundle>
