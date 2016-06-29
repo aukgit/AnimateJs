@@ -197,10 +197,18 @@ $.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson) 
 };
 ///#source 1 1 /src/scripts/stylemanipulation/applysimultaneousstyle.js
 $.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultaneousAction, $element, isRemove) {
-    if (singleSimultaneousAction.length === 1) { //only 1 style to apply, no "+" symbol needed
-
-    } else {//DOM manipulation is needed
-        
+    var nowStyle = singleSimultaneousAction[0];
+    this.applySingleStyle($element, singleSimultaneousAction[0]);
+    if (nowStyle.remove === true) {
+        isRemove = true;
+    }
+    singleSimultaneousAction.pop();
+    if (singleSimultaneousAction.length) { //more style to apply
+        //wrap the element with span
+        //$newEle=wrapper span
+        //this.applySimultaneousStyle(singleSimultaneousAction, $newEle, isRemove)
+    } else if(isRemove) {//no more style to apply and element needs to be removed.
+        //
     }
 }
 ///#source 1 1 /src/scripts/stylemanipulation/processactionlist.js
