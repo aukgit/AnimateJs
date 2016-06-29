@@ -51,6 +51,10 @@ $.animateJs.stringManipulation.getParameterValue = function ($functionWithParame
 
     var start = $functionWithParameter.indexOf("(") + 1;
     var end = $functionWithParameter.indexOf(")");
+    if ($functionWithParameter[start] === '"'|| $functionWithParameter[start] ==="'")//to eliminate " or ' at the start
+        start++;
+    if ($functionWithParameter[end - 1] === '"' || $functionWithParameter[end - 1] === "'")//to eliminate " or ' at the end
+        end--;
     var $value = $functionWithParameter.substr(start, end - start);
     return $value;
 };
@@ -198,15 +202,16 @@ $.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson) 
 ///#source 1 1 /src/scripts/stylemanipulation/applysimultaneousstyle.js
 $.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultaneousAction, $element, isRemove) {
     var nowStyle = singleSimultaneousAction[0];
+    var $newEle;
     this.applySingleStyle($element, singleSimultaneousAction[0]);
-    if (nowStyle.remove === true) {
+    if (!remove && nowStyle.remove === true) {
         isRemove = true;
     }
     singleSimultaneousAction.pop();
     if (singleSimultaneousAction.length) { //more style to apply
         //wrap the element with span
-        //$newEle=wrapper span
-        //this.applySimultaneousStyle(singleSimultaneousAction, $newEle, isRemove)
+        $newEle = $element.wrap("<span></span>").parent();
+        this.applySimultaneousStyle(singleSimultaneousAction, $newEle, isRemove);
     } else if(isRemove) {//no more style to apply and element needs to be removed.
         //
     }
@@ -214,11 +219,15 @@ $.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultane
 ///#source 1 1 /src/scripts/stylemanipulation/processactionlist.js
 $.animateJs.styleManipulation.processActionList = function (actionList, $element) {
     for (var i = 0; i < actionList.length; i++) {
-        if (actionList[i][0].selection === null) {
+        if (actionList[i][0].selection !== null) {
+            $element = $element.find(actionList[i][0].selection);
+            if ($element.length) {
+                //call all the nodes on the element with simulStyle method
+            } 
+            
+        } else {
             this.applySimultaneousStyle(actionList[i], $element, false);
         }
-
-
     }
 }
 ///#source 1 1 /src/scripts/init.js

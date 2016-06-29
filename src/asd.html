@@ -1,5 +1,5 @@
 ﻿
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
   <title>Animate.css</title>
@@ -17,7 +17,7 @@
    <span id="animationSandbox" style="display: block;" ><h1 class="site__title mega">Animate.css</h1></span>
     <span class="beta subhead">Just-add-water CSS animations</span>
   </div>
-</header><!-- /.site__header -->
+</header>
 
 <main class="site__content island" role="content">
   <div class="wrap">
@@ -50,7 +50,7 @@
     <p class="meta"><a href="https://raw.github.com/daneden/animate.css/master/animate.css" download="animate.css">Download Animate.css</a> or <a href="//github.com/daneden/animate.css">View on GitHub</a></p>
     <p><small>Another thing from <a href="//daneden.me">Daniel Eden</a>.</small></p>
   </div>
-</main><!-- /.site__content -->
+</main>
     <script src="jquery-1.10.2.min.js"></script>
     <script src="Animation/plug.js"></script>
     <script src="Animation/Attributes.js"></script>
@@ -58,6 +58,44 @@
     <script src="Animation/init.js"></script>
 
 <script src="script.js"></script>
+
+</body>
+</html>-->
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>wrap demo</title>
+    <style>
+        div {
+            border: 2px solid blue;
+            margin: 2px;
+            padding: 2px;
+        }
+
+        .doublediv {
+            border-color: red;
+        }
+
+        p {
+            background: yellow;
+            margin: 4px;
+            font-size: 14px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+
+    <p>Hello</p>
+    <p>cruel</p>
+    <p>World</p>
+    <div class="doublediv"><div></div></div>
+
+    <script>
+        $("p").wrap($(".doublediv"));
+    </script>
 
 </body>
 </html>
