@@ -196,7 +196,7 @@ $.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson) 
 });
 };
 ///#source 1 1 /src/scripts/stylemanipulation/applysimultaneousstyle.js
-$.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultaneousAction) {
+$.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultaneousAction, $element, isRemove) {
     if (singleSimultaneousAction.length === 1) { //only 1 style to apply, no "+" symbol needed
 
     } else {//DOM manipulation is needed
@@ -204,9 +204,13 @@ $.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultane
     }
 }
 ///#source 1 1 /src/scripts/stylemanipulation/processactionlist.js
-$.animateJs.styleManipulation.processActionList = function (actionList) {
+$.animateJs.styleManipulation.processActionList = function (actionList, $element) {
     for (var i = 0; i < actionList.length; i++) {
-        
+        if (actionList[i][0].selection === null) {
+            this.applySimultaneousStyle(actionList[i], $element, false);
+        }
+
+
     }
 }
 ///#source 1 1 /src/scripts/init.js
