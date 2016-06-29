@@ -6,6 +6,7 @@
     /// <returns type="">array of json object with selection, delay, duration, iteration as value</returns>
 
     var tasks = this.extractActions(workingAttr);
+    var nowAndSimutaneous;
     console.log(tasks);
     var selectorStyle = false;
     var gotOne = false;
@@ -51,14 +52,10 @@
         
                 nowStyle[funcName] = "" + funcValue;
 
-                if (isJoin) {
-                    //if plus symbol found, push the current syle in simultaneous array, initiate a new nowStyle
-                    simultaneousStyles.push(nowStyle);
-                    nowStyle = this.initiateCurrentStyle();
-                    // ReSharper disable once UsageOfPossiblyUnassignedValue
-                    nowStyle.style = splitStyle[1];
-                    nowStyle.selection = simultaneousStyles[0].selection; //current style's selector would be the same as simultaneous selectors
-
+                if (isJoin) {//func()+s1+s2+....
+                    nowAndSimutaneous = this.processJoinCommand(nowStyle, simultaneousStyles, splitStyle);
+                    nowStyle = nowAndSimutaneous.nowStyle;
+                    simultaneousStyles = nowAndSimutaneous.simultaneousStyles;
                 }
             }
         }
@@ -78,17 +75,15 @@
                 simultaneousStyles = [];
                 gotOne = true;
                 nowStyle = this.initiateCurrentStyle();
-                //SVGAnimatedStringASD;
             } else {
                 gotOne = true;
                 selectorStyle = false;
             }
             nowStyle.style = splitStyle[0];
-            if (isJoin) {//style1+style2
-                simultaneousStyles.push(nowStyle);
-                nowStyle = this.initiateCurrentStyle();
-                nowStyle.style = "" + splitStyle[1];
-                nowStyle.selection = simultaneousStyles[0].selection;
+            if (isJoin) {//style1+style2+.....
+                nowAndSimutaneous = this.processJoinCommand(nowStyle, simultaneousStyles, splitStyle);
+                nowStyle = nowAndSimutaneous.nowStyle;
+                simultaneousStyles = nowAndSimutaneous.simultaneousStyles;
             }
         }
 
@@ -99,3 +94,21 @@
     }
     return style;
 };
+
+
+$.animateJs.stringManipulation.processJoinCommand=function (nowStyle, simultaneousStyles, splitStyle) {
+    var nowAndSimutaneous = {};
+    simultaneousStyles.push(nowStyle);
+    nowStyle = this.initiateCurrentStyle();
+    nowStyle.selection = simultaneousStyles[0].selection;
+    for (var i = 1; i < splitStyle.length-1; i++) {
+        nowStyle.style = splitStyle[i];
+        simultaneousStyles.push(nowStyle);
+
+    }
+    nowStyle.style = splitStyle[splitStyle.length - 1];
+    nowAndSimutaneous.simultaneousStyles = simultaneousStyles;
+    nowAndSimutaneous.nowStyle = nowStyle;
+    return nowAndSimutaneous;
+
+}
