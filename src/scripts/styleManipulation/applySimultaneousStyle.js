@@ -1,8 +1,9 @@
-﻿$.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultaneousAction, $element, isRemove) {
+﻿
+$.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultaneousAction, $element, isRemove) {
     var nowStyle = singleSimultaneousAction[0];
     var $newEle;
     this.applySingleStyle($element, singleSimultaneousAction[0]);
-    if (!remove && nowStyle.remove === true) {
+    if (!isRemove && nowStyle.remove === true) {
         isRemove = true;
     }
     singleSimultaneousAction.pop();

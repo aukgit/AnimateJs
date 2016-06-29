@@ -141,7 +141,6 @@ $.animateJs.stringManipulation.extractStyles = function (workingAttr) {
                 else
                     isJoin = true;
 
-        
                 nowStyle[funcName] = "" + funcValue;
 
                 if (isJoin) {//func()+s1+s2+....
@@ -208,11 +207,11 @@ $.animateJs.stringManipulation.processJoinCommand=function (nowStyle, simultaneo
 $.animateJs.styleManipulation = {};
 ///#source 1 1 /src/scripts/stylemanipulation/applysinglestyle.js
 $.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson) {
-    $element.css({
-        "animation-delay": styleJson.delay.toString(),
-        "animation-duration": styleJson.duration.toString(),
-        "animation-iteration-count":styleJson.iteration.toString()
-});
+//    $element.css({
+//        "animation-delay": styleJson.delay.toString(),
+//        "animation-duration": styleJson.duration.toString(),
+//        "animation-iteration-count":styleJson.iteration.toString()
+//});
 };
 ///#source 1 1 /src/scripts/stylemanipulation/applysimultaneousstyle.js
 
@@ -283,7 +282,7 @@ $.animateJs.init = function (options, elem) {
     console.log(this.attrValue);
     var actionList = this.stringManipulation.extractStyles(this.attrValue);
     console.log(actionList);
-    //this.styleManipulation.processActionList(actionList,this.$elem);
+    this.styleManipulation.processActionList(actionList,this.$elem);
     // return this so that we can chain and use the bridge with less code.
     return this;
 }
