@@ -17,6 +17,7 @@
     <file>/src/scripts/stringmanipulation/getParameterValue.js</file>
     <file>/src/scripts/stringmanipulation/getFuncName.js</file>
     <file>/src/scripts/stringmanipulation/initiateCurrentStyle.js</file>
+    <file>/src/scripts/stringmanipulation/processjoincommand.js</file>
     <file>/src/scripts/stringmanipulation/extractStyles.js</file>
 
     <file>/src/scripts/stylemanipulation/stylemanipulation.js</file>
