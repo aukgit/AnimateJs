@@ -2,8 +2,8 @@
         workingAttr: "data-animate",
         reflections: {
             iteration: {
-                called: "repeat",
-                names: ["repeat", "itr", "repeat", "Itr", "Repeat"]
+                called: "iteration",
+                names: ["repeat", "itr", "Itr", "Repeat"]
             },
             duration: {
                 called: "duration",

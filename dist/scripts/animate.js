@@ -12,8 +12,8 @@ $.animateJs.stringManipulation.options = {
         workingAttr: "data-animate",
         reflections: {
             iteration: {
-                called: "repeat",
-                names: ["repeat", "itr", "repeat", "Itr", "Repeat"]
+                called: "iteration",
+                names: ["repeat", "itr", "Itr", "Repeat"]
             },
             duration: {
                 called: "duration",
@@ -222,7 +222,7 @@ $.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson) 
 };
 ///#source 1 1 /src/scripts/stylemanipulation/applysimultaneousstyle.js
 
-$.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultaneousAction, $element, isRemove) {
+$.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultaneousAction, $element, additionalDelay, isRemove) {
     var nowStyle = singleSimultaneousAction[0];
     var $newEle;
     this.applySingleStyle($element, singleSimultaneousAction[0]);
@@ -232,7 +232,7 @@ $.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultane
     singleSimultaneousAction.shift();//pop the first element of the array
     if (singleSimultaneousAction.length) { //more style to apply
         //wrap the element with span
-        $newEle = $element.wrap("<span></span>").parent();
+        $newEle = $element.wrap("<span class='wrapping'></span>").parent();
         this.applySimultaneousStyle(singleSimultaneousAction, $newEle, isRemove);
     } else if(isRemove) {//no more style to apply and element needs to be removed.
         //
@@ -245,9 +245,9 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
     /// </summary>
     /// <param name="actionList" type="[arrayOfJsonObjects][jsonObjects]">list of all styles to implement</param>
     /// <param name="$element" type="DOM element"></param>
-    //sd
 
-    console.log("hello from processAction "+ actionList.length);
+    var delayTillNow = 0;
+    console.log("hello from processAction " + actionList.length);
     for (var i = 0; i < actionList.length; i++) {
         if (actionList[i][0].selection !== null) {
             console.log("yes selection :(" + actionList[i]);
@@ -255,16 +255,49 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
             $element = $element.find(actionList[i][0].selection);
             if ($element.length) {
                 //call all the nodes on the element with simulStyle method
-                for (var j = 0; j < $element.length; j++)
-                    applySimultaneousStyle(actionList[i], $element[i], false);
-            } 
-            
+                for (var j = 0; j < $element.length; j++) {
+                    applySimultaneousStyle(actionList[i], $element[i], delayTillNow, false);
+                }
+            }
+
         } else {
-            console.log("no selection :D" + actionList[i]);
-            this.applySimultaneousStyle(actionList[i], $element, false);
+            console.log(actionList[i]);
+            console.log(this.totalDuration(actionList[i]));
+
+            //this.applySimultaneousStyle(actionList[i], $element, delayTillNow, false);
         }
+
+        delayTillNow += this.totalDuration(actionList[i]);
     }
 }
+
+$.animateJs.styleManipulation.totalDuration = function (simultaneousStyle) {
+    var totalTime = 0;
+    var i;
+    var currentStyle;
+    var nowTime;
+    var delay;
+    var iteration;
+    var duration;
+    for (i = 0; i < simultaneousStyle.length; i++) {
+        currentStyle = simultaneousStyle[i];
+        delay = this.trimSecond(currentStyle.delay);
+        console.log("delay= "+delay);
+        iteration = currentStyle.iteration;
+        console.log(iteration);
+        duration = this.trimSecond(currentStyle.duration);
+        console.log("duration= " + duration);
+        nowTime = delay + duration * iteration;
+        totalTime += nowTime;
+    }
+    return totalTime;
+}
+
+$.animateJs.styleManipulation.trimSecond = function(text) {
+    var number = parseInt(text, 10);
+    return number;
+}
+
 ///#source 1 1 /src/scripts/init.js
 $.animateJs.init = function (options, elem) {
     /// <summary>
