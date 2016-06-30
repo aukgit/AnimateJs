@@ -229,7 +229,7 @@ $.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultane
     if (!isRemove && nowStyle.remove === true) {
         isRemove = true;
     }
-    singleSimultaneousAction.pop();
+    singleSimultaneousAction.shift();//pop the first element of the array
     if (singleSimultaneousAction.length) { //more style to apply
         //wrap the element with span
         $newEle = $element.wrap("<span></span>").parent();
@@ -245,7 +245,9 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
     /// </summary>
     /// <param name="actionList" type="[arrayOfJsonObjects][jsonObjects]">list of all styles to implement</param>
     /// <param name="$element" type="DOM element"></param>
+    //sd
 
+    console.log("hello from processAction "+ actionList.length);
     for (var i = 0; i < actionList.length; i++) {
         if (actionList[i][0].selection !== null) {
             console.log("yes selection :(" + actionList[i]);
@@ -253,6 +255,8 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
             $element = $element.find(actionList[i][0].selection);
             if ($element.length) {
                 //call all the nodes on the element with simulStyle method
+                for (var j = 0; j < $element.length; j++)
+                    applySimultaneousStyle(actionList[i], $element[i], false);
             } 
             
         } else {
@@ -289,8 +293,9 @@ $.animateJs.init = function (options, elem) {
     console.log(this.attrValue);
     var actionList = this.stringManipulation.extractStyles(this.attrValue);
     console.log(actionList);
-    //sdf
-    var valueCopyOfActionList = $.extend(true, {}, actionList);
+    //var valueCopyOfActionList = $.extend(true, {}, actionList);//valueCopyOfActionList becomes an object despite actionList being an array
+    var valueCopyOfActionList = actionList.slice(0);//native cloning of actionList, not a deep clone. Effects should be evaluated
+    //console.log(valueCopyOfActionList);
     this.styleManipulation.processActionList(valueCopyOfActionList, this.$elem);
     // return this so that we can chain and use the bridge with less code.
     return this;

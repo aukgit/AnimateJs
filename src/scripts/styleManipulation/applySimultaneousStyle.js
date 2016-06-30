@@ -6,7 +6,7 @@ $.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultane
     if (!isRemove && nowStyle.remove === true) {
         isRemove = true;
     }
-    singleSimultaneousAction.pop();
+    singleSimultaneousAction.shift();//pop the first element of the array
     if (singleSimultaneousAction.length) { //more style to apply
         //wrap the element with span
         $newEle = $element.wrap("<span></span>").parent();

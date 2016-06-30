@@ -25,7 +25,10 @@
     console.log(this.attrValue);
     var actionList = this.stringManipulation.extractStyles(this.attrValue);
     console.log(actionList);
-    this.styleManipulation.processActionList(actionList,this.$elem);
+    //var valueCopyOfActionList = $.extend(true, {}, actionList);//valueCopyOfActionList becomes an object despite actionList being an array
+    var valueCopyOfActionList = actionList.slice(0);//native cloning of actionList, not a deep clone. Effects should be evaluated
+    //console.log(valueCopyOfActionList);
+    this.styleManipulation.processActionList(valueCopyOfActionList, this.$elem);
     // return this so that we can chain and use the bridge with less code.
     return this;
 }
