@@ -1,4 +1,4 @@
-﻿$.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson) {
+﻿$.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson, additionalDelay) {
     var styleName = styleJson.style;
     $element.addClass(styleName + ' animated');
 

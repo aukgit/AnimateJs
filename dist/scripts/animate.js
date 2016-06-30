@@ -210,7 +210,7 @@ $.animateJs.stringManipulation.extractStyles = function (workingAttr) {
 ///#source 1 1 /src/scripts/stylemanipulation/stylemanipulation.js
 $.animateJs.styleManipulation = {};
 ///#source 1 1 /src/scripts/stylemanipulation/applysinglestyle.js
-$.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson) {
+$.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson, additionalDelay) {
     var styleName = styleJson.style;
     $element.addClass(styleName + ' animated');
 
@@ -225,7 +225,7 @@ $.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson) 
 $.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultaneousAction, $element, additionalDelay, isRemove) {
     var nowStyle = singleSimultaneousAction[0];
     var $newEle;
-    this.applySingleStyle($element, singleSimultaneousAction[0]);
+    this.applySingleStyle($element, singleSimultaneousAction[0], additionalDelay);
     if (!isRemove && nowStyle.remove === true) {
         isRemove = true;
     }
@@ -247,10 +247,12 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
     /// <param name="$element" type="DOM element"></param>
 
     var delayTillNow = 0;
-    console.log("hello from processAction " + actionList.length);
+    var nowDelay;
+    //console.log("hello from processAction " + actionList.length);
     for (var i = 0; i < actionList.length; i++) {
+        nowDelay = this.totalDuration(actionList[i]);
         if (actionList[i][0].selection !== null) {
-            console.log("yes selection :(" + actionList[i]);
+            //console.log("yes selection :(" + actionList[i]);
 
             $element = $element.find(actionList[i][0].selection);
             if ($element.length) {
@@ -261,13 +263,13 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
             }
 
         } else {
-            console.log(actionList[i]);
-            console.log(this.totalDuration(actionList[i]));
+            //console.log(actionList[i]);
+            //console.log(this.totalDuration(actionList[i]));
 
-            //this.applySimultaneousStyle(actionList[i], $element, delayTillNow, false);
+            this.applySimultaneousStyle(actionList[i], $element, delayTillNow, false);
         }
 
-        delayTillNow += this.totalDuration(actionList[i]);
+        delayTillNow += nowDelay;
     }
 }
 
@@ -282,11 +284,11 @@ $.animateJs.styleManipulation.totalDuration = function (simultaneousStyle) {
     for (i = 0; i < simultaneousStyle.length; i++) {
         currentStyle = simultaneousStyle[i];
         delay = this.trimSecond(currentStyle.delay);
-        console.log("delay= "+delay);
+        //console.log("delay= "+delay);
         iteration = currentStyle.iteration;
-        console.log(iteration);
+        //console.log(iteration);
         duration = this.trimSecond(currentStyle.duration);
-        console.log("duration= " + duration);
+        //console.log("duration= " + duration);
         nowTime = delay + duration * iteration;
         totalTime += nowTime;
     }
