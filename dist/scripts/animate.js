@@ -89,6 +89,25 @@ $.animateJs.stringManipulation.initiateCurrentStyle = function () {
 
 };
 
+///#source 1 1 /src/scripts/stringmanipulation/processjoincommand.js
+$.animateJs.stringManipulation.processJoinCommand = function (nowStyle, simultaneousStyles, splitStyle) {
+    var nowAndSimutaneous = {};
+    simultaneousStyles.push(nowStyle);
+
+    for (var i = 1; i < splitStyle.length - 1; i++) {
+        nowStyle = this.initiateCurrentStyle();
+        nowStyle.selection = simultaneousStyles[0].selection;
+        nowStyle.style = splitStyle[i];
+        simultaneousStyles.push(nowStyle);
+
+    }
+    nowStyle = this.initiateCurrentStyle();
+    nowStyle.style = splitStyle[splitStyle.length - 1];
+    nowAndSimutaneous.simultaneousStyles = simultaneousStyles;
+    nowAndSimutaneous.nowStyle = nowStyle;
+    return nowAndSimutaneous;
+
+}
 ///#source 1 1 /src/scripts/stringmanipulation/extractStyles.js
 $.animateJs.stringManipulation.extractStyles = function (workingAttr) {
     /// <summary>
@@ -187,26 +206,14 @@ $.animateJs.stringManipulation.extractStyles = function (workingAttr) {
 };
 
 
-$.animateJs.stringManipulation.processJoinCommand=function (nowStyle, simultaneousStyles, splitStyle) {
-    var nowAndSimutaneous = {};
-    simultaneousStyles.push(nowStyle);
-    nowStyle = this.initiateCurrentStyle();
-    nowStyle.selection = simultaneousStyles[0].selection;
-    for (var i = 1; i < splitStyle.length-1; i++) {
-        nowStyle.style = splitStyle[i];
-        simultaneousStyles.push(nowStyle);
 
-    }
-    nowStyle.style = splitStyle[splitStyle.length - 1];
-    nowAndSimutaneous.simultaneousStyles = simultaneousStyles;
-    nowAndSimutaneous.nowStyle = nowStyle;
-    return nowAndSimutaneous;
-
-}
 ///#source 1 1 /src/scripts/stylemanipulation/stylemanipulation.js
 $.animateJs.styleManipulation = {};
 ///#source 1 1 /src/scripts/stylemanipulation/applysinglestyle.js
 $.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson) {
+    var styleName = styleJson.style;
+    $element.addClass(styleName + ' animated');
+
 //    $element.css({
 //        "animation-delay": styleJson.delay.toString(),
 //        "animation-duration": styleJson.duration.toString(),
@@ -282,7 +289,9 @@ $.animateJs.init = function (options, elem) {
     console.log(this.attrValue);
     var actionList = this.stringManipulation.extractStyles(this.attrValue);
     console.log(actionList);
-    this.styleManipulation.processActionList(actionList,this.$elem);
+    //sdf
+    var valueCopyOfActionList = $.extend(true, {}, actionList);
+    this.styleManipulation.processActionList(valueCopyOfActionList, this.$elem);
     // return this so that we can chain and use the bridge with less code.
     return this;
 }
