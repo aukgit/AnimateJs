@@ -215,7 +215,7 @@ $.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson, 
     $element.addClass(styleName + ' animated');
 
     $element.css({
-        "animation-delay": styleJson.delay.toString(),
+        "animation-delay": (parseInt(styleJson.delay)+parseInt(additionalDelay)).toString(),
         "animation-duration": styleJson.duration.toString(),
         "animation-iteration-count":styleJson.iteration.toString()
 });
