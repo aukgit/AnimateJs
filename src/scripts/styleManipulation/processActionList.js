@@ -7,6 +7,10 @@
 
     var delayTillNow = 0;
     var nowDelay;
+    var isMultipleAnimation;
+    isMultipleAnimation = this.multipleAnimation(actionList);
+    if (isMultipleAnimation)
+        this.wrapper($element, "mother-wrapper");
     //console.log("hello from processAction " + actionList.length);
     for (var i = 0; i < actionList.length; i++) {
         nowDelay = this.totalDuration(actionList[i]);
@@ -33,4 +37,8 @@
 }
 
 
-
+$.animateJs.styleManipulation.multipleAnimation = function (actionList) {
+    if (actionList.length > 1 || actionList[0].length > 1)
+        return true;
+    return false;
+}

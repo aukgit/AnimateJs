@@ -222,7 +222,7 @@ $.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson, 
 };
 ///#source 1 1 /src/scripts/stylemanipulation/totalduration.js
 $.animateJs.styleManipulation.totalDuration = function (simultaneousStyle) {
-    var totalTime = 0;
+    var maxTime = 0;
     var i;
     var currentStyle;
     var nowTime;
@@ -238,9 +238,9 @@ $.animateJs.styleManipulation.totalDuration = function (simultaneousStyle) {
         duration = this.trimSecond(currentStyle.duration);
         //console.log("duration= " + duration);
         nowTime = delay + duration * iteration;
-        totalTime += nowTime;
+        maxTime =Math.max(nowTime,maxTime);
     }
-    return totalTime;
+    return maxTime;
 }
 ///#source 1 1 /src/scripts/stylemanipulation/trimsecond.js
 $.animateJs.styleManipulation.trimSecond = function (text) {
@@ -252,19 +252,40 @@ $.animateJs.styleManipulation.trimSecond = function (text) {
 
 $.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultaneousAction, $element, additionalDelay, isRemove) {
     var nowStyle = singleSimultaneousAction[0];
+    var endOfMultipleStyle;
     var $newEle;
     this.applySingleStyle($element, singleSimultaneousAction[0], additionalDelay);
     if (!isRemove && nowStyle.remove === true) {
         isRemove = true;
     }
     singleSimultaneousAction.shift();//pop the first element of the array
+    //if (!singleSimultaneousAction.length && additionalDelay)
+    //    endOfMultipleStyle = true;
+    //else {
+    //    endOfMultipleStyle = false;
+    //}
+    //if (endOfMultipleStyle)
+    //    this.wrapper($element, "multiple-animation=wrapper");
+
     if (singleSimultaneousAction.length) { //more style to apply
         //wrap the element with span
-        $newEle = $element.wrap("<span class='wrapping'></span>").parent();
+        //$newEle = $element.wrap("<span class='wrapping'></span>").parent();
+        $newEle = this.wrapper($element, "element-animation-wrapper").parent();
         this.applySimultaneousStyle(singleSimultaneousAction, $newEle, isRemove);
-    } else if(isRemove) {//no more style to apply and element needs to be removed.
+    } else if (isRemove) {//no more style to apply and element needs to be removed.
         //
     }
+
+}
+
+$.animateJs.styleManipulation.wrapper = function ($element, className, idName) {
+    if (idName === undefined)
+        return $element.wrap("<span class='animation-js-" + className + "'></span>");
+        //return $element;
+    else {
+        $element.wrap("<span class='" + className + "'" + "id='" + idName + "'></span>");
+    }
+    return $element;
 }
 ///#source 1 1 /src/scripts/stylemanipulation/processactionlist.js
 $.animateJs.styleManipulation.processActionList = function (actionList, $element) {
@@ -276,6 +297,10 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
 
     var delayTillNow = 0;
     var nowDelay;
+    var isMultipleAnimation;
+    isMultipleAnimation = this.multipleAnimation(actionList);
+    if (isMultipleAnimation)
+        this.wrapper($element, "mother-wrapper");
     //console.log("hello from processAction " + actionList.length);
     for (var i = 0; i < actionList.length; i++) {
         nowDelay = this.totalDuration(actionList[i]);
@@ -302,7 +327,11 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
 }
 
 
-
+$.animateJs.styleManipulation.multipleAnimation = function (actionList) {
+    if (actionList.length > 1 || actionList[0].length > 1)
+        return true;
+    return false;
+}
 
 ///#source 1 1 /src/scripts/init.js
 $.animateJs.init = function (options, elem) {
@@ -334,8 +363,11 @@ $.animateJs.init = function (options, elem) {
     console.log(actionList);
     //var valueCopyOfActionList = $.extend(true, {}, actionList);//valueCopyOfActionList becomes an object despite actionList being an array
     var valueCopyOfActionList = actionList.slice(0);//native cloning of actionList, not a deep clone. Effects should be evaluated
-    //console.log(valueCopyOfActionList);
+    var newObject = jQuery.extend(true, {}, actionList);//console.log(valueCopyOfActionList);
+    var keys = Object.keys(newObject);
+    console.log(newObject[keys[0]]);
     this.styleManipulation.processActionList(valueCopyOfActionList, this.$elem);
+    //this.styleManipulation.processActionList(newObject[keys[0]], this.$elem);
     // return this so that we can chain and use the bridge with less code.
     return this;
 }

@@ -27,8 +27,11 @@
     console.log(actionList);
     //var valueCopyOfActionList = $.extend(true, {}, actionList);//valueCopyOfActionList becomes an object despite actionList being an array
     var valueCopyOfActionList = actionList.slice(0);//native cloning of actionList, not a deep clone. Effects should be evaluated
-    //console.log(valueCopyOfActionList);
+    var newObject = jQuery.extend(true, {}, actionList);//console.log(valueCopyOfActionList);
+    var keys = Object.keys(newObject);
+    console.log(newObject[keys[0]]);
     this.styleManipulation.processActionList(valueCopyOfActionList, this.$elem);
+    //this.styleManipulation.processActionList(newObject[keys[0]], this.$elem);
     // return this so that we can chain and use the bridge with less code.
     return this;
 }
