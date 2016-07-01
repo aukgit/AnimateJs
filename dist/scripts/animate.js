@@ -297,10 +297,8 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
 
     var delayTillNow = 0;
     var nowDelay;
-    var isMultipleAnimation;
-    isMultipleAnimation = this.multipleAnimation(actionList);
-    if (isMultipleAnimation)
-        this.wrapper($element, "mother-wrapper");
+    var isMultipleAnimation = this.multipleAnimation(actionList);
+    //sd
     //console.log("hello from processAction " + actionList.length);
     for (var i = 0; i < actionList.length; i++) {
         nowDelay = this.totalDuration(actionList[i]);
@@ -308,17 +306,20 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
             //console.log("yes selection :(" + actionList[i]);
 
             $element = $element.find(actionList[i][0].selection);
+            if (isMultipleAnimation)
+                this.wrapper($element, "mother-wrapper");
             if ($element.length) {
                 //call all the nodes on the element with simulStyle method
                 for (var j = 0; j < $element.length; j++) {
-                    applySimultaneousStyle(actionList[i], $element[i], delayTillNow, false);
+                    this.applySimultaneousStyle(actionList[i], $($element[i]), delayTillNow, false);//$element[i] is not a DOM object. that's why we're type casting it by doing $($element)
                 }
             }
 
         } else {
             //console.log(actionList[i]);
             //console.log(this.totalDuration(actionList[i]));
-
+            if (isMultipleAnimation)
+                this.wrapper($element, "mother-wrapper");
             this.applySimultaneousStyle(actionList[i], $element, delayTillNow, false);
         }
 
