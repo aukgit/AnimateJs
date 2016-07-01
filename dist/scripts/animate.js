@@ -220,6 +220,34 @@ $.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson, 
         "animation-iteration-count":styleJson.iteration.toString()
 });
 };
+///#source 1 1 /src/scripts/stylemanipulation/totalduration.js
+$.animateJs.styleManipulation.totalDuration = function (simultaneousStyle) {
+    var totalTime = 0;
+    var i;
+    var currentStyle;
+    var nowTime;
+    var delay;
+    var iteration;
+    var duration;
+    for (i = 0; i < simultaneousStyle.length; i++) {
+        currentStyle = simultaneousStyle[i];
+        delay = this.trimSecond(currentStyle.delay);
+        //console.log("delay= "+delay);
+        iteration = currentStyle.iteration;
+        //console.log(iteration);
+        duration = this.trimSecond(currentStyle.duration);
+        //console.log("duration= " + duration);
+        nowTime = delay + duration * iteration;
+        totalTime += nowTime;
+    }
+    return totalTime;
+}
+///#source 1 1 /src/scripts/stylemanipulation/trimsecond.js
+$.animateJs.styleManipulation.trimSecond = function (text) {
+    var number = parseInt(text, 10);
+    return number;
+}
+
 ///#source 1 1 /src/scripts/stylemanipulation/applysimultaneousstyle.js
 
 $.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultaneousAction, $element, additionalDelay, isRemove) {
@@ -273,32 +301,8 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
     }
 }
 
-$.animateJs.styleManipulation.totalDuration = function (simultaneousStyle) {
-    var totalTime = 0;
-    var i;
-    var currentStyle;
-    var nowTime;
-    var delay;
-    var iteration;
-    var duration;
-    for (i = 0; i < simultaneousStyle.length; i++) {
-        currentStyle = simultaneousStyle[i];
-        delay = this.trimSecond(currentStyle.delay);
-        //console.log("delay= "+delay);
-        iteration = currentStyle.iteration;
-        //console.log(iteration);
-        duration = this.trimSecond(currentStyle.duration);
-        //console.log("duration= " + duration);
-        nowTime = delay + duration * iteration;
-        totalTime += nowTime;
-    }
-    return totalTime;
-}
 
-$.animateJs.styleManipulation.trimSecond = function(text) {
-    var number = parseInt(text, 10);
-    return number;
-}
+
 
 ///#source 1 1 /src/scripts/init.js
 $.animateJs.init = function (options, elem) {
