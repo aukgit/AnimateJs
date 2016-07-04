@@ -283,8 +283,16 @@ $.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultane
 
 ///#source 1 1 /src/scripts/stylemanipulation/multipleanimation.js
 $.animateJs.styleManipulation.multipleAnimation = function (actionList) {
-    if (actionList.length > 1 || actionList[0].length > 1)
-        return true;
+    //if (actionList.length > 1 || actionList[0].length > 1)
+    //    return true;
+    var styleOnMain = 0;
+    for (var i = 0; i < actionList.length; i++) {
+        if (actionList[i][0].selection === null) {
+            styleOnMain++;
+        }
+        if (styleOnMain >= 2)
+            return true;
+    }
     return false;
 }
 ///#source 1 1 /src/scripts/stylemanipulation/processactionlist.js
@@ -297,28 +305,39 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
 
     var delayTillNow = 0;
     var nowDelay;
-    var isMultipleAnimation = this.multipleAnimation(actionList);
+    var multipleOnMain = this.multipleAnimation(actionList);
+    var multipleOnChildren;
+    var $children;
+    var $child;
     //sd
     //console.log("hello from processAction " + actionList.length);
     for (var i = 0; i < actionList.length; i++) {
         nowDelay = this.totalDuration(actionList[i]);
         if (actionList[i][0].selection !== null) {
             //console.log("yes selection :(" + actionList[i]);
-
-            $element = $element.find(actionList[i][0].selection);
-            if (isMultipleAnimation)
-                this.wrapper($element, "mother-wrapper");
+            if (actionList[i].length > 1) {
+                multipleOnChildren = true;
+            } else {
+                multipleOnChildren = false;
+            }
+            $children = $element.find(actionList[i][0].selection);
+            //if (multipleOnChildren)
+            //    this.wrapper($element, "mother-wrapper");
             if ($element.length) {
                 //call all the nodes on the element with simulStyle method
-                for (var j = 0; j < $element.length; j++) {
-                    this.applySimultaneousStyle(actionList[i], $($element[i]), delayTillNow, false);//$element[i] is not a DOM object. that's why we're type casting it by doing $($element)
+                for (var j = 0; j < $children.length; j++) {
+                    $child = $($children[i]);//children[i] is not a DOM object. that's why we're type casting it by doing $(children[i])
+                    if (multipleOnChildren) {
+                        this.wrapper($child, "mother-wrapper");
+                    }
+                    this.applySimultaneousStyle(actionList[i], $child, delayTillNow, false);
                 }
             }
 
         } else {
             //console.log(actionList[i]);
             //console.log(this.totalDuration(actionList[i]));
-            if (isMultipleAnimation)
+            if (multipleOnMain)
                 this.wrapper($element, "mother-wrapper");
             this.applySimultaneousStyle(actionList[i], $element, delayTillNow, false);
         }
