@@ -118,7 +118,7 @@ $.animateJs.stringManipulation.extractStyles = function (workingAttr) {
 
     var tasks = this.extractActions(workingAttr);
     var nowAndSimutaneous;
-    console.log(tasks);
+    //console.log(tasks);
     var selectorStyle = false;
     var gotOne = false;
     var style = [];
@@ -273,11 +273,12 @@ $.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultane
     if (singleSimultaneousAction.length) { //more style to apply
         //wrap the element with span
         $newEle = this.wrapper($element, "element-animation-wrapper").parent();
-        this.applySimultaneousStyle(singleSimultaneousAction, $newEle, isRemove);
-    } else if (isRemove) {//no more style to apply and element needs to be removed.
-        //
+        return this.applySimultaneousStyle(singleSimultaneousAction, $newEle, isRemove);
+    } else  {//no more style to apply and element needs to be removed.
+        console.log("hi ");
+        console.log($element);
+        return $element;
     }
-
 }
 
 
@@ -307,6 +308,7 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
     var nowDelay;
     var multipleOnMain = this.multipleAnimation(actionList);
     var multipleOnChildren;
+    var $currentEle = $element;
     var $children;
     var $child;
     //sd
@@ -337,18 +339,19 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
         } else {
             //console.log(actionList[i]);
             //console.log(this.totalDuration(actionList[i]));
-            if (multipleOnMain)
+            if (multipleOnMain) {
+                multipleOnMain = false;
                 this.wrapper($element, "mother-wrapper");
-            this.applySimultaneousStyle(actionList[i], $element, delayTillNow, false);
+            } else {
+                $element = this.wrapper($element, "element-animation-wrapper").parent();
+            }
+            $element=this.applySimultaneousStyle(actionList[i], $element, delayTillNow, false);
+            console.log($element);
         }
 
         delayTillNow += nowDelay;
     }
 }
-
-
-
-
 ///#source 1 1 /src/scripts/init.js
 $.animateJs.init = function (options, elem) {
     /// <summary>
@@ -376,7 +379,7 @@ $.animateJs.init = function (options, elem) {
 
     console.log(this.attrValue);
     var actionList = this.stringManipulation.extractStyles(this.attrValue);
-    console.log(actionList);
+    //console.log(actionList);
     //var valueCopyOfActionList = $.extend(true, {}, actionList);//valueCopyOfActionList becomes an object despite actionList being an array
     var valueCopyOfActionList = actionList.slice(0);//native cloning of actionList, not a deep clone. Effects should be evaluated
     var newObject = jQuery.extend(true, {}, actionList);//console.log(valueCopyOfActionList);

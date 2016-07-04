@@ -7,7 +7,7 @@
 
     var tasks = this.extractActions(workingAttr);
     var nowAndSimutaneous;
-    console.log(tasks);
+    //console.log(tasks);
     var selectorStyle = false;
     var gotOne = false;
     var style = [];

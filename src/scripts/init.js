@@ -24,7 +24,7 @@
 
     console.log(this.attrValue);
     var actionList = this.stringManipulation.extractStyles(this.attrValue);
-    console.log(actionList);
+    //console.log(actionList);
     //var valueCopyOfActionList = $.extend(true, {}, actionList);//valueCopyOfActionList becomes an object despite actionList being an array
     var valueCopyOfActionList = actionList.slice(0);//native cloning of actionList, not a deep clone. Effects should be evaluated
     var newObject = jQuery.extend(true, {}, actionList);//console.log(valueCopyOfActionList);
