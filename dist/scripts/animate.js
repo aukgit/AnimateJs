@@ -212,10 +212,12 @@ $.animateJs.styleManipulation = {};
 ///#source 1 1 /src/scripts/stylemanipulation/applysinglestyle.js
 $.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson, additionalDelay) {
     var styleName = styleJson.style;
+    var totalDelay = (parseInt(styleJson.delay) + parseInt(additionalDelay)).toString();
+    console.log("time " + totalDelay);
     $element.addClass(styleName + ' animated');
 
     $element.css({
-        "animation-delay": (parseInt(styleJson.delay)+parseInt(additionalDelay)).toString(),
+        "animation-delay": totalDelay,
         "animation-duration": styleJson.duration.toString(),
         "animation-iteration-count":styleJson.iteration.toString()
 });
@@ -250,6 +252,8 @@ $.animateJs.styleManipulation.trimSecond = function (text) {
 
 ///#source 1 1 /src/scripts/stylemanipulation/wrapper.js
 $.animateJs.styleManipulation.wrapper = function ($element, className, idName) {
+    if (className === undefined)
+        className = "element-animation-wrapper";
     if (idName === undefined)
         return $element.wrap("<span class='animation-js-" + className + "'></span>");
         //return $element;
