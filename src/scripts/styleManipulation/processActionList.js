@@ -9,6 +9,7 @@
     var nowDelay;
     var multipleOnMain = this.multipleAnimation(actionList);
     var multipleOnChildren;
+    var $currentEle = $element;
     var $children;
     var $child;
     //sd
@@ -39,14 +40,16 @@
         } else {
             //console.log(actionList[i]);
             //console.log(this.totalDuration(actionList[i]));
-            if (multipleOnMain)
+            if (multipleOnMain) {
+                multipleOnMain = false;
                 this.wrapper($element, "mother-wrapper");
-            this.applySimultaneousStyle(actionList[i], $element, delayTillNow, false);
+            } else {
+                $element = this.wrapper($element, "element-animation-wrapper").parent();
+            }
+            $element=this.applySimultaneousStyle(actionList[i], $element, delayTillNow, false);
+            console.log($element);
         }
 
         delayTillNow += nowDelay;
     }
 }
-
-
-
