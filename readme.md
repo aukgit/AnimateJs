@@ -17,6 +17,46 @@ The main purpose of of animate.js is to give you some extra functionality of **[
 ###Dependencies
 **[Animated.css](https://raw.github.com/daneden/animate.css/master/animate.css/ "Animated.css")**
 
+###Syntax
+- HTML
+	- Add the class ``a-js``  to the element where you want to apply ***AnimateJs***
+	-  Add the attribute `data-animate` with the element to specify the actions you want to give static action command in html.
+- JavaScript
+	- In your javaScript code you can invoke the ***AnimateJs***  plugin in three ways:
+		- `$(".a-js").animateJs();//execute the animation command of data-animation attribute of all the elements having a-js class`
+		- `$(".a-js").animateJs("animation commands");//execute the animation command given in the parameter of animateJs to all the elements having a-js class`
+		- or you can use:
+		```
+    		 $("a-js").animateJs({
+            workingAttr: "data-animate",//the working attribute you wwant to deal with
+            reflections: {//names of called function
+                iteration: {
+                    called: "iteration",
+                    names: ["repeat", "itr", "Itr", "Repeat"]
+                },
+                duration: {
+                    called: "duration",
+                    names: ["duration", "dur", "Duration", "Dur"]
+                },
+                delay: {
+                    called: "delay",
+                    names: ["delay", "Delay"]
+                },
+                selection: {
+                    called: "select",
+                    names: ["selection", "select","selector", "Select", "Selection", "Selector"]
+                },
+                remove: {
+                    called: "remove",
+                    names:["remove", "delete", "Remove", "Delete"]
+                }
+            },
+            seperator: "->",//the seperator used to distinguish between commands
+            multi: "+"// separator used to to resemble simultaneous actions
+    })
+
+		```
+
 ###Basic Usage
 
 - HTML
