@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>AnimateJs Examples</title>
     <meta charset="utf-8" />
     <link href="Styles/bootstrap.css" rel="stylesheet" />
     <link href="Styles/bootstrap-theme.css" rel="stylesheet" />
@@ -11,7 +11,7 @@
     <div class="container" id="habi">
         <h1>Animate Js</h1>
         <div class="row" id="jabi">
-            <div class="col-md-4 a-js " data-animate="s1+s2+s3">
+            <div class="col-md-4 a-js " data-animate="elastic+shake">
                 Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
             </div>
             <div class="col-md-4 this-one animated bounce second">
@@ -26,7 +26,7 @@
         <div class="row"></div>
         <br /><br />
         <!--<br /><br />-->
-        <div class="row a-js" data-animate="selector('#abc')->style1+style2+style3->dur(2s)->style55">
+        <div class="row a-js" data-animate="selector('#abcX')->fadeIn+shake->dur(8s)->fadeOut">
             <h1>Second row </h1>
             <div class="col-md-4" id="abc">
                 <!--<div class="col-md-4 a-js " data-animate="flash->duration(3s)+shake->duration(10s)">-->
@@ -47,6 +47,8 @@
             <div class="col-md-4 flash animated">hello there</div>
         </span>
     </div>
+
+
     <script src="lib/jquery-2.2.4.js"></script>
     <script src="lib/bootstrap.js"></script>
     <script src="../dist/scripts/animate.js"></script>

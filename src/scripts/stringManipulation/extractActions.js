@@ -5,6 +5,5 @@
     /// <param name="working_attr" type="type"></param>
     /// <returns type=""></returns>
    
-    var $actions = workingAttr.split(this.options.seperator);
-    return $actions;
+    return workingAttr.split(this.options.seperator);
 };

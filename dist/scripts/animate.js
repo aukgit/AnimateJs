@@ -1,7 +1,7 @@
 ﻿///#source 1 1 /src/scripts/animateJs.js
 ;
 /**
- * Animate js is a library : 1.0.
+ * Animate js is a library : 1.1.
  */
 $.animateJs = {}; //json , class or object.
 
@@ -13,11 +13,11 @@ $.animateJs.stringManipulation.options = {
         reflections: {
             iteration: {
                 called: "iteration",
-                names: ["repeat", "itr", "Itr", "Repeat"]
+                names: ["repeat", "itr", "Itr", "Repeat", "run"]
             },
             duration: {
                 called: "duration",
-                names: ["duration", "dur", "Duration", "Dur"]
+                names: ["duration", "dur", "Duration", "Dur", "wait", "till"]
             },
             delay: {
                 called: "delay",
@@ -43,8 +43,7 @@ $.animateJs.stringManipulation.extractActions = function (workingAttr) {
     /// <param name="working_attr" type="type"></param>
     /// <returns type=""></returns>
    
-    var $actions = workingAttr.split(this.options.seperator);
-    return $actions;
+    return workingAttr.split(this.options.seperator);
 };
 ///#source 1 1 /src/scripts/stringmanipulation/getParameterValue.js
 $.animateJs.stringManipulation.getParameterValue = function ($functionWithParameter) {
@@ -73,6 +72,7 @@ $.animateJs.stringManipulation.getFuncName = function ($step) {
             }
         }
     }
+    return null;
 };
 
 ///#source 1 1 /src/scripts/stringmanipulation/initiateCurrentStyle.js
@@ -86,7 +86,6 @@ $.animateJs.stringManipulation.initiateCurrentStyle = function () {
         remove:false
     };
     return $initialStyle;
-
 };
 
 ///#source 1 1 /src/scripts/stringmanipulation/processjoincommand.js
@@ -138,23 +137,24 @@ $.animateJs.stringManipulation.extractStyles = function (workingAttr) {
         if (isFunc) {
             funcName = this.getFuncName(tasks[i]);
             funcValue = this.getParameterValue(tasks[i]);
-            if (funcName === this.options.reflections.selection.called) {// a selector,start of a new style
-                if (gotOne) {//push the previous style int simultaneousStyles and push simultaneousStyles to style
+            if (funcName === this.options.reflections.selection.called) { // a selector,start of a new style
+                if (gotOne) {
+                    // push the previous style int simultaneousStyles and push simultaneousStyles to style
                     simultaneousStyles.push(nowStyle);
                     style.push(simultaneousStyles);
                 }
-                simultaneousStyles = [];//new simultaneousStyles
+                simultaneousStyles = [];
+                //new simultaneousStyles
                 gotOne = true;
                 selectorStyle = true;
                 nowStyle = this.initiateCurrentStyle();
                 nowStyle.selection = "" + funcValue;
             } else if (funcName === this.options.reflections.remove.called) {
                 nowStyle.remove = true;
-            }
-
-            else { //a normal function, might or mightn't have a "+" with it
+            } else {
+                //a normal function, might or mightn't have a "+" with it
                 selectorStyle = false;
-                splitStyle = tasks[i].split("+");//if it has a "+" with it splitStyle.length=2 otherwise splitStyle.length=1
+                splitStyle = tasks[i].split("+"); //if it has a "+" with it splitStyle.length=2 otherwise splitStyle.length=1
                 if (splitStyle.length === 1)
                     isJoin = false;
                 else
@@ -162,21 +162,24 @@ $.animateJs.stringManipulation.extractStyles = function (workingAttr) {
 
                 nowStyle[funcName] = "" + funcValue;
 
-                if (isJoin) {//func()+s1+s2+....
+                if (isJoin) {
+                    // func()+s1+s2+....
                     nowAndSimutaneous = this.processJoinCommand(nowStyle, simultaneousStyles, splitStyle);
                     nowStyle = nowAndSimutaneous.nowStyle;
                     simultaneousStyles = nowAndSimutaneous.simultaneousStyles;
                 }
             }
-        }
 
-        else {//got a style element, it might or mightn't be preceded by selector and might or mightn't have a "+" with it
-            splitStyle = tasks[i].split("+");//if it has a "+" with it splitStyle.length=2 otherwise splitStyle.length=1
-            if (splitStyle.length === 1)
+        } else {
+            // got a style element, it might or mightn't be preceded by selector and might or mightn't have a "+" with it
+            splitStyle = tasks[i].split("+");
+            // if it has a "+" with it splitStyle.length=2 otherwise splitStyle.length=1
+            if (splitStyle.length === 1) {
                 isJoin = false;
-            else {
+            } else {
                 isJoin = true;
             }
+
             if (!selectorStyle) { //style element, not preceded by selector, start of a new simultaneousStyles
                 if (gotOne) { //push the previous style int simultaneousStyles and push simultaneousStyles to style
                     simultaneousStyles.push(nowStyle);
@@ -190,7 +193,8 @@ $.animateJs.stringManipulation.extractStyles = function (workingAttr) {
                 selectorStyle = false;
             }
             nowStyle.style = splitStyle[0];
-            if (isJoin) {//style1+style2+.....
+            if (isJoin) {
+                //style1+style2+.....
                 nowAndSimutaneous = this.processJoinCommand(nowStyle, simultaneousStyles, splitStyle);
                 nowStyle = nowAndSimutaneous.nowStyle;
                 simultaneousStyles = nowAndSimutaneous.simultaneousStyles;
@@ -198,7 +202,8 @@ $.animateJs.stringManipulation.extractStyles = function (workingAttr) {
         }
 
     }
-    if (gotOne) {//push the last style (if any)
+    if (gotOne) {
+        // push the last style (if any)
         simultaneousStyles.push(nowStyle);
         style.push(simultaneousStyles);
     }
@@ -219,18 +224,14 @@ $.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson, 
     $element.css({
         "animation-delay": totalDelay,
         "animation-duration": styleJson.duration.toString(),
-        "animation-iteration-count":styleJson.iteration.toString()
-});
+        "animation-iteration-count": styleJson.iteration.toString()
+    });
 };
 ///#source 1 1 /src/scripts/stylemanipulation/totalduration.js
 $.animateJs.styleManipulation.totalDuration = function (simultaneousStyle) {
-    var maxTime = 0;
-    var i;
-    var currentStyle;
-    var nowTime;
-    var delay;
-    var iteration;
-    var duration;
+    var maxTime = 0, i, currentStyle,
+        nowTime, delay, iteration, duration;
+
     for (i = 0; i < simultaneousStyle.length; i++) {
         currentStyle = simultaneousStyle[i];
         delay = this.trimSecond(currentStyle.delay);
@@ -240,24 +241,26 @@ $.animateJs.styleManipulation.totalDuration = function (simultaneousStyle) {
         duration = this.trimSecond(currentStyle.duration);
         //console.log("duration= " + duration);
         nowTime = delay + duration * iteration;
-        maxTime =Math.max(nowTime,maxTime);
+        maxTime = Math.max(nowTime, maxTime);
     }
     return maxTime;
 }
 ///#source 1 1 /src/scripts/stylemanipulation/trimsecond.js
 $.animateJs.styleManipulation.trimSecond = function (text) {
-    var number = parseInt(text, 10);
+    var number = parseFloat(text, 10);
     return number;
 }
 
 ///#source 1 1 /src/scripts/stylemanipulation/wrapper.js
 $.animateJs.styleManipulation.wrapper = function ($element, className, idName) {
-    if (className === undefined)
+    if (className === undefined) {
         className = "element-animation-wrapper";
-    if (idName === undefined)
+    }
+
+    if (idName === undefined) {
         return $element.wrap("<span class='animation-js-" + className + "'></span>");
         //return $element;
-    else {
+    } else {
         $element.wrap("<span class='" + className + "'" + "id='" + idName + "'></span>");
     }
     return $element;
@@ -266,7 +269,6 @@ $.animateJs.styleManipulation.wrapper = function ($element, className, idName) {
 
 $.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultaneousAction, $element, additionalDelay, isRemove) {
     var nowStyle = singleSimultaneousAction[0];
-    var endOfMultipleStyle;
     var $newEle;
     this.applySingleStyle($element, singleSimultaneousAction[0], additionalDelay);
     if (!isRemove && nowStyle.remove === true) {
@@ -295,8 +297,9 @@ $.animateJs.styleManipulation.multipleAnimation = function (actionList) {
         if (actionList[i][0].selection === null) {
             styleOnMain++;
         }
-        if (styleOnMain >= 2)
+        if (styleOnMain >= 2) {
             return true;
+        }
     }
     return false;
 }
@@ -312,29 +315,40 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
     var nowDelay;
     var multipleOnMain = this.multipleAnimation(actionList);
     var multipleOnChildren;
-    var $currentEle = $element;
     var $children;
     var $child;
+    var wrapperName = "wrapper-start";
+    var selectorText;
     //sd
     //console.log("hello from processAction " + actionList.length);
     for (var i = 0; i < actionList.length; i++) {
+        selectorText = actionList[i][0].selection;
+
         nowDelay = this.totalDuration(actionList[i]);
-        if (actionList[i][0].selection !== null) {
+        if (selectorText !== null) {
             //console.log("yes selection :(" + actionList[i]);
             if (actionList[i].length > 1) {
                 multipleOnChildren = true;
             } else {
                 multipleOnChildren = false;
             }
-            $children = $element.find(actionList[i][0].selection);
+
+            $children = $(selectorText); // selector should search in whole document.\
+
+            if ($children.length === 0) {
+                if (this.throwException) {
+                    throw new Error("\"" + selectorText + "\" cannot be found in the page.");
+                }
+            }
+
             //if (multipleOnChildren)
-            //    this.wrapper($element, "mother-wrapper");
+            //    this.wrapper($element, wrapperName);
             if ($element.length) {
                 //call all the nodes on the element with simulStyle method
                 for (var j = 0; j < $children.length; j++) {
                     $child = $($children[i]);//children[i] is not a DOM object. that's why we're type casting it by doing $(children[i])
                     if (multipleOnChildren) {
-                        this.wrapper($child, "mother-wrapper");
+                        this.wrapper($child, wrapperName);
                     }
                     this.applySimultaneousStyle(actionList[i], $child, delayTillNow, false);
                 }
@@ -345,7 +359,7 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
             //console.log(this.totalDuration(actionList[i]));
             if (multipleOnMain) {
                 multipleOnMain = false;
-                this.wrapper($element, "mother-wrapper");
+                this.wrapper($element, wrapperName);
             } else {
                 $element = this.wrapper($element, "element-animation-wrapper").parent();
             }
@@ -359,25 +373,27 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
 ///#source 1 1 /src/scripts/init.js
 $.animateJs.init = function (options, elem) {
     /// <summary>
-    /// Helo
+    /// AnimateJs initial function.
     /// </summary>
-    /// <param name="options" type="type">wdwd</param>
-    /// <param name="elem" type="type">wdwdwd</param>
+    /// <param name="options" type="type">Pass options</param>
+    /// <param name="elem" type="type">Element in which the animation will be applied.</param>
     /// <returns type=""></returns>
-    
+
     // Mix in the passed-in options with the default options
-// ReSharper disable once NativeTypePrototypeExtending
+    // ReSharper disable once NativeTypePrototypeExtending
     String.prototype.replaceAll = function (str1, str2, ignore) {
         return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, "\\$&"), (ignore ? "gi" : "g")), (typeof (str2) == "string") ? str2.replace(/\$/g, "$$$$") : str2);
     }
+
     this.elem = elem;
     this.$elem = $(elem);
+
+    this.throwException = true;
 
     if (typeof options !== "string") {
         this.stringManipulation.options = $.extend({}, this.stringManipulation.options, options);
         this.attrValue = this.elem.attr(this.stringManipulation.options.workingAttr);
-    }
-    else {
+    } else {
         this.attrValue = options;
     }
 
@@ -395,48 +411,46 @@ $.animateJs.init = function (options, elem) {
     return this;
 }
 
-///#source 1 1 /src/scripts/myMethod.js
-//$.animateJs.task.Process.itr = function (msg) {
-//    // You have direct access to the associated and cached
-//    // jQuery element
-//    console.log("myMethod triggered");
+///#source 1 1 /src/scripts/injector.js
+/**
+ * This file is the injector and initiator of AnimationJs
+ */
 
-//    // this.$elem.append('<p>'+msg+'</p>');
-//}
-///#source 1 1 /src/scripts/inject.js
-// Object.create support test, and fallback for browsers without it
-if (typeof Object.create !== "function") {
-    //console.log("not a function named create");
-    Object.create = function (o) {
-        function F() { }
-        F.prototype = o;
-        return new F();
+$(function() {
+    // on ready
+    // Object.create support test, and fallback for browsers without it
+    if (typeof Object.create !== "function") {
+        //console.log("not a function named create");
+        Object.create = function (o) {
+            function F() { }
+            F.prototype = o;
+            return new F();
+        };
+    }
+
+    // Create a plugin based on a defined object
+    $.plugin = function (name, object) {
+        //console.log("inside plugin script");
+        $.fn[name] = function (options) {
+            return this.each(function () {
+                if (!$.data(this, name)) {
+                    $.data(this, name, Object.create(object).init(
+                    options, $(this)));
+                }
+            });
+        };
     };
-} else {
-    //console.log("object.create is a function");
-}
 
-// Create a plugin based on a defined object
-$.plugin = function (name, object) {
-    //console.log("inside plugin script");
-    $.fn[name] = function (options) {
-        return this.each(function () {
-            if (!$.data(this, name)) {
-                $.data(this, name, Object.create(object).init(
-                options, $(this)));
-            }
-        });
-    };
-};
+    $.plugin('animateJs', $.animateJs);
+    // Usage:
+    // With myObject, we could now essentially do this:
+    // $.plugin('myobj', myObject);
 
-$.plugin('animateJs', $.animateJs);
-// Usage:
-// With myObject, we could now essentially do this:
-// $.plugin('myobj', myObject);
+    // and at this point we could do the following
+    // $('#elem').myobj({name: "John"});
+    // var inst = $('#elem').data('myobj');
+    // inst.myMethod('I am a method');
 
-// and at this point we could do the following
-// $('#elem').myobj({name: "John"});
-// var inst = $('#elem').data('myobj');
-// inst.myMethod('I am a method');
+});
 
 

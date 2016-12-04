@@ -3,11 +3,11 @@
         reflections: {
             iteration: {
                 called: "iteration",
-                names: ["repeat", "itr", "Itr", "Repeat"]
+                names: ["repeat", "itr", "Itr", "Repeat", "run"]
             },
             duration: {
                 called: "duration",
-                names: ["duration", "dur", "Duration", "Dur"]
+                names: ["duration", "dur", "Duration", "Dur", "wait", "till"]
             },
             delay: {
                 called: "delay",

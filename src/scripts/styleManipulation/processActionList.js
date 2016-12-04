@@ -9,29 +9,40 @@
     var nowDelay;
     var multipleOnMain = this.multipleAnimation(actionList);
     var multipleOnChildren;
-    var $currentEle = $element;
     var $children;
     var $child;
+    var wrapperName = "wrapper-start";
+    var selectorText;
     //sd
     //console.log("hello from processAction " + actionList.length);
     for (var i = 0; i < actionList.length; i++) {
+        selectorText = actionList[i][0].selection;
+
         nowDelay = this.totalDuration(actionList[i]);
-        if (actionList[i][0].selection !== null) {
+        if (selectorText !== null) {
             //console.log("yes selection :(" + actionList[i]);
             if (actionList[i].length > 1) {
                 multipleOnChildren = true;
             } else {
                 multipleOnChildren = false;
             }
-            $children = $element.find(actionList[i][0].selection);
+
+            $children = $(selectorText); // selector should search in whole document.\
+
+            if ($children.length === 0) {
+                if (this.throwException) {
+                    throw new Error("\"" + selectorText + "\" cannot be found in the page.");
+                }
+            }
+
             //if (multipleOnChildren)
-            //    this.wrapper($element, "mother-wrapper");
+            //    this.wrapper($element, wrapperName);
             if ($element.length) {
                 //call all the nodes on the element with simulStyle method
                 for (var j = 0; j < $children.length; j++) {
                     $child = $($children[i]);//children[i] is not a DOM object. that's why we're type casting it by doing $(children[i])
                     if (multipleOnChildren) {
-                        this.wrapper($child, "mother-wrapper");
+                        this.wrapper($child, wrapperName);
                     }
                     this.applySimultaneousStyle(actionList[i], $child, delayTillNow, false);
                 }
@@ -42,7 +53,7 @@
             //console.log(this.totalDuration(actionList[i]));
             if (multipleOnMain) {
                 multipleOnMain = false;
-                this.wrapper($element, "mother-wrapper");
+                this.wrapper($element, wrapperName);
             } else {
                 $element = this.wrapper($element, "element-animation-wrapper").parent();
             }

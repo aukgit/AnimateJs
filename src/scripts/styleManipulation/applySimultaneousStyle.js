@@ -1,7 +1,6 @@
 ﻿
 $.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultaneousAction, $element, additionalDelay, isRemove) {
     var nowStyle = singleSimultaneousAction[0];
-    var endOfMultipleStyle;
     var $newEle;
     this.applySingleStyle($element, singleSimultaneousAction[0], additionalDelay);
     if (!isRemove && nowStyle.remove === true) {

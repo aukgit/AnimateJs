@@ -1,11 +1,7 @@
 ﻿$.animateJs.styleManipulation.totalDuration = function (simultaneousStyle) {
-    var maxTime = 0;
-    var i;
-    var currentStyle;
-    var nowTime;
-    var delay;
-    var iteration;
-    var duration;
+    var maxTime = 0, i, currentStyle,
+        nowTime, delay, iteration, duration;
+
     for (i = 0; i < simultaneousStyle.length; i++) {
         currentStyle = simultaneousStyle[i];
         delay = this.trimSecond(currentStyle.delay);
@@ -15,7 +11,7 @@
         duration = this.trimSecond(currentStyle.duration);
         //console.log("duration= " + duration);
         nowTime = delay + duration * iteration;
-        maxTime =Math.max(nowTime,maxTime);
+        maxTime = Math.max(nowTime, maxTime);
     }
     return maxTime;
 }

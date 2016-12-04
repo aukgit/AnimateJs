@@ -8,5 +8,4 @@
         remove:false
     };
     return $initialStyle;
-
 };

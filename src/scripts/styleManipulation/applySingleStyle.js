@@ -7,6 +7,6 @@
     $element.css({
         "animation-delay": totalDelay,
         "animation-duration": styleJson.duration.toString(),
-        "animation-iteration-count":styleJson.iteration.toString()
-});
+        "animation-iteration-count": styleJson.iteration.toString()
+    });
 };

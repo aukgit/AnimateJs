@@ -30,7 +30,6 @@
     <file>/src/scripts/stylemanipulation/processactionlist.js</file>
 
     <file>/src/scripts/init.js</file>
-    <file>/src/scripts/myMethod.js</file>
-    <file>/src/scripts/inject.js</file>
+    <file>/src/scripts/injector.js</file>
   </files>
 </bundle>

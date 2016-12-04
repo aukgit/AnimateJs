@@ -1,24 +1,26 @@
 ﻿$.animateJs.init = function (options, elem) {
     /// <summary>
-    /// Helo
+    /// AnimateJs initial function.
     /// </summary>
-    /// <param name="options" type="type">wdwd</param>
-    /// <param name="elem" type="type">wdwdwd</param>
+    /// <param name="options" type="type">Pass options</param>
+    /// <param name="elem" type="type">Element in which the animation will be applied.</param>
     /// <returns type=""></returns>
-    
+
     // Mix in the passed-in options with the default options
-// ReSharper disable once NativeTypePrototypeExtending
+    // ReSharper disable once NativeTypePrototypeExtending
     String.prototype.replaceAll = function (str1, str2, ignore) {
         return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, "\\$&"), (ignore ? "gi" : "g")), (typeof (str2) == "string") ? str2.replace(/\$/g, "$$$$") : str2);
     }
+
     this.elem = elem;
     this.$elem = $(elem);
+
+    this.throwException = true;
 
     if (typeof options !== "string") {
         this.stringManipulation.options = $.extend({}, this.stringManipulation.options, options);
         this.attrValue = this.elem.attr(this.stringManipulation.options.workingAttr);
-    }
-    else {
+    } else {
         this.attrValue = options;
     }
 

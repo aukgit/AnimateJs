@@ -6,8 +6,9 @@
         if (actionList[i][0].selection === null) {
             styleOnMain++;
         }
-        if (styleOnMain >= 2)
+        if (styleOnMain >= 2) {
             return true;
+        }
     }
     return false;
 }
