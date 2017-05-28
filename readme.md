@@ -1,6 +1,12 @@
 Welcome to Animate.js
 ===================
-Welcome to the **[Animate.js](https://github.com/aukgit/AnimateJs/ "Animate.js")**. It was  written by [Rashik Hasnat](https://github.com/Rashik004 "Rashik Hasnat") on supervision of   [Md. Alim Ul Karim](https://github.com/aukgit "Md. Alim Ul Karim github").
+Welcome to the **[Animate.js](https://github.com/aukgit/AnimateJs/ "Animate.js")**. 
+
+### [Current Version and future version]
+It was  written and maintained by [Md. Alim Ul Karim](https://github.com/aukgit "Md. Alim Ul Karim github").
+
+**[Pre Alpha Release 0.01](https://github.com/aukgit/AnimateJs/releases/tag/0.01/ "Pre Alpha Release 0.01")**
+It was  written by [Rashik Hasnat](https://github.com/Rashik004 "Rashik Hasnat") on supervision of   [Md. Alim Ul Karim](https://github.com/aukgit "Md. Alim Ul Karim github").
 
 ### Purpose
 
