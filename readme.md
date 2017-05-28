@@ -6,7 +6,7 @@ Welcome to the **[Animate.js](https://github.com/aukgit/AnimateJs/ "Animate.js")
 [Md. Alim Ul Karim](https://github.com/aukgit "Md. Alim Ul Karim github") is author for current and future versions.
 
 #### **[Pre Alpha Release 0.01](https://github.com/aukgit/AnimateJs/releases/tag/0.01/ "Pre Alpha Release 0.01")**
-It was  written by [Rashik Hasnat](https://github.com/Rashik004 "Rashik Hasnat") and supervised   [Md. Alim Ul Karim](https://github.com/aukgit "Md. Alim Ul Karim github").
+It was  written by [Rashik Hasnat](https://github.com/Rashik004 "Rashik Hasnat") and supervised by [Md. Alim Ul Karim](https://github.com/aukgit "Md. Alim Ul Karim github").
 
 ### Purpose
 
