@@ -9,11 +9,11 @@ $.animateJs.styleManipulation.wrapper = function ($element, wrapperClass, wrappe
     /// <param name="wrapperClass" type="type">class name for the wrapper.</param>
     /// <param name="wrapperId" type="type">wrapper id.</param>
     /// <returns type=""></returns>
-    if (_.isEmpty(wrapperClass)) {
+    if (_.isEmptyObject(wrapperClass)) {
         wrapperClass = "element-animation-wrapper";
     }
 
-    if (_.isEmpty(wrapperId)) {
+    if (_.isEmptyObject(wrapperId)) {
         return $element.wrap("<span class='animation-js-" + wrapperClass + "'></span>");
         //return $element;
     } else {

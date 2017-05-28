@@ -199,7 +199,7 @@ intellisense.annotate(jQuery, {
     ///   <returns type="Boolean" />
     /// </signature>
   },
-  'isEmptyObject': function() {
+  'isEmptyObjectObject': function() {
     /// <signature>
     ///   <summary>Check to see if an object is empty (contains no enumerable properties).</summary>
     ///   <param name="object" type="Object">The object that will be checked to see if it's empty.</param>

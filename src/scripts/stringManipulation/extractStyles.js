@@ -15,24 +15,28 @@
     var nowStyle = "";
     var funcName;
     var funcValue;
-    var isFunc;
+    var isFunc = false;
     var splitStyle;
     var isJoin;
     for (var i = 0; i < tasks.length; i++) {
-        if (tasks[i].indexOf("(") > -1)
-            isFunc = true;
-        else {
-            isFunc = false;
-        }
+        var task = tasks[i];
+
+        // is function means it is not a single animation.
+        // it can be a selector or remove function
+        isFunc = task.indexOf("(") > -1; 
+
         if (isFunc) {
-            funcName = this.getFuncName(tasks[i]);
-            funcValue = this.getParameterValue(tasks[i]);
-            if (funcName === this.options.reflections.selection.called) { // a selector,start of a new style
+            funcName = this.getFuncName(task);
+            funcValue = this.getParameterValue(task);
+            if (funcName === this.options.reflections.selection.called) {
+
+                // a selector, start of a new animation
                 if (gotOne) {
                     // push the previous style int simultaneousStyles and push simultaneousStyles to style
                     simultaneousStyles.push(nowStyle);
                     style.push(simultaneousStyles);
                 }
+
                 simultaneousStyles = [];
                 //new simultaneousStyles
                 gotOne = true;
@@ -44,7 +48,7 @@
             } else {
                 //a normal function, might or mightn't have a "+" with it
                 selectorStyle = false;
-                splitStyle = tasks[i].split("+"); //if it has a "+" with it splitStyle.length=2 otherwise splitStyle.length=1
+                splitStyle = task.split("+"); //if it has a "+" with it splitStyle.length=2 otherwise splitStyle.length=1
                 if (splitStyle.length === 1)
                     isJoin = false;
                 else
@@ -62,7 +66,7 @@
 
         } else {
             // got a style element, it might or mightn't be preceded by selector and might or mightn't have a "+" with it
-            splitStyle = tasks[i].split("+");
+            splitStyle = task.split("+");
             // if it has a "+" with it splitStyle.length=2 otherwise splitStyle.length=1
             if (splitStyle.length === 1) {
                 isJoin = false;
@@ -97,6 +101,8 @@
         simultaneousStyles.push(nowStyle);
         style.push(simultaneousStyles);
     }
+
+
     return style;
 };
 

@@ -300,7 +300,7 @@ jQuery.extend( {
 		return key === undefined || hasOwn.call( obj, key );
 	},
 
-	isEmptyObject: function( obj ) {
+	isEmptyObjectObject: function( obj ) {
 		var name;
 		for ( name in obj ) {
 			return false;
@@ -3830,7 +3830,7 @@ Data.prototype = {
 		}
 
 		// Remove the expando if there's no more data
-		if ( key === undefined || jQuery.isEmptyObject( cache ) ) {
+		if ( key === undefined || jQuery.isEmptyObjectObject( cache ) ) {
 
 			// Support: Chrome <= 35-45+
 			// Webkit & Blink performance suffers when deleting properties
@@ -3845,7 +3845,7 @@ Data.prototype = {
 	},
 	hasData: function( owner ) {
 		var cache = owner[ this.expando ];
-		return cache !== undefined && !jQuery.isEmptyObject( cache );
+		return cache !== undefined && !jQuery.isEmptyObjectObject( cache );
 	}
 };
 var dataPriv = new Data();
@@ -4689,7 +4689,7 @@ jQuery.event = {
 		}
 
 		// Remove data and the expando if it's no longer used
-		if ( jQuery.isEmptyObject( events ) ) {
+		if ( jQuery.isEmptyObjectObject( events ) ) {
 			dataPriv.remove( elem, "handle events" );
 		}
 	},
@@ -6594,7 +6594,7 @@ function defaultPrefilter( elem, props, opts ) {
 		}
 	}
 
-	if ( !jQuery.isEmptyObject( orig ) ) {
+	if ( !jQuery.isEmptyObjectObject( orig ) ) {
 		if ( dataShow ) {
 			if ( "hidden" in dataShow ) {
 				hidden = dataShow.hidden;
@@ -6874,7 +6874,7 @@ jQuery.fn.extend( {
 			.end().animate( { opacity: to }, speed, easing, callback );
 	},
 	animate: function( prop, speed, easing, callback ) {
-		var empty = jQuery.isEmptyObject( prop ),
+		var empty = jQuery.isEmptyObjectObject( prop ),
 			optall = jQuery.speed( speed, easing, callback ),
 			doAnimation = function() {
 

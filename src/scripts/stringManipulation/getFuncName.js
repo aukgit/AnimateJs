@@ -1,4 +1,9 @@
 ﻿$.animateJs.stringManipulation.getFuncName = function ($step) {
+    /// <summary>
+    /// return only the name before the parenthesis.
+    /// </summary>
+    /// <param name="$step" type="type"></param>
+    /// <returns type=""></returns>
     var reflections = this.options.reflections;
     var attrName,names;
     var keys = Object.keys(reflections);
