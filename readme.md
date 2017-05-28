@@ -12,7 +12,7 @@ It was  written by [Rashik Hasnat](https://github.com/Rashik004 "Rashik Hasnat")
 
 The main purpose of of animate.js is to give you some extra functionality of **[Animated.css](https://raw.github.com/daneden/animate.css/master/animate.css/ "Animated.css")**
 
-**Functionalities**
+### **Functionalities**
 
 - Animate an element with more than one animation
 
@@ -20,10 +20,10 @@ The main purpose of of animate.js is to give you some extra functionality of **[
 
 - Run concurrent animation in a single element.
 
-###Dependencies
+### Dependencies
 **[Animated.css](https://raw.github.com/daneden/animate.css/master/animate.css/ "Animated.css")**
 
-###Syntax
+### Syntax
 - HTML
 	- Add the class ``a-js``  to the element where you want to apply ***AnimateJs***
 	-  Add the attribute `data-animate` with the element to specify the actions you want to give static action command in html.
@@ -63,7 +63,7 @@ The main purpose of of animate.js is to give you some extra functionality of **[
 
 		```
 
-###Basic Usage
+### Basic Usage
 
 - HTML
 ```
@@ -75,7 +75,7 @@ The main purpose of of animate.js is to give you some extra functionality of **[
 $(".a-js").animateJs();
 ```
 
-###Advance Usage
+### Advance Usage
 
 - HTML
 ```
