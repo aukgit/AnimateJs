@@ -1,20 +1,21 @@
 ﻿$.animateJs.styleManipulation.processActionList = function (actionList, $element) {
     /// <summary>
-    /// 
+    /// Process every action found in the list.
     /// </summary>
     /// <param name="actionList" type="[arrayOfJsonObjects][jsonObjects]">list of all styles to implement</param>
-    /// <param name="$element" type="DOM element"></param>
+    /// <param name="$element" type="DOM element">Pass a DOM </param>
 
-    var delayTillNow = 0;
-    var nowDelay;
-    var multipleOnMain = this.multipleAnimation(actionList);
-    var multipleOnChildren;
-    var $children;
-    var $child;
-    var wrapperName = "wrapper-start";
-    var selectorText;
-    //sd
+    var delayTillNow = 0,
+        nowDelay,
+        multipleOnMain = this.multipleAnimation(actionList),
+        multipleOnChildren,
+        $children,
+        $child,
+        wrapperName = "wrapper-start",
+        selectorText;
+
     //console.log("hello from processAction " + actionList.length);
+
     for (var i = 0; i < actionList.length; i++) {
         selectorText = actionList[i][0].selection;
 
@@ -44,19 +45,20 @@
                     if (multipleOnChildren) {
                         this.wrapper($child, wrapperName);
                     }
+
                     this.applySimultaneousStyle(actionList[i], $child, delayTillNow, false);
                 }
             }
 
         } else {
-            //console.log(actionList[i]);
-            //console.log(this.totalDuration(actionList[i]));
+          
             if (multipleOnMain) {
                 multipleOnMain = false;
                 this.wrapper($element, wrapperName);
             } else {
                 $element = this.wrapper($element, "element-animation-wrapper").parent();
             }
+
             $element=this.applySimultaneousStyle(actionList[i], $element, delayTillNow, false);
             console.log($element);
         }

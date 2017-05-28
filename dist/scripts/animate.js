@@ -1,9 +1,8 @@
 ﻿///#source 1 1 /src/scripts/animateJs.js
-;
 /**
- * Animate js is a library : 1.1.
+ * Animate Js is a library : 1.1.
  */
-$.animateJs = {}; //json , class or object.
+;$.animateJs = {};
 
 ///#source 1 1 /src/scripts/stringmanipulation/stringmanipulation.js
 $.animateJs.stringManipulation = {};
@@ -252,16 +251,26 @@ $.animateJs.styleManipulation.trimSecond = function (text) {
 }
 
 ///#source 1 1 /src/scripts/stylemanipulation/wrapper.js
-$.animateJs.styleManipulation.wrapper = function ($element, className, idName) {
-    if (className === undefined) {
-        className = "element-animation-wrapper";
+/// <reference path="../lib/underscoreLight.js" />
+
+
+$.animateJs.styleManipulation.wrapper = function ($element, wrapperClass, wrapperId) {
+    /// <summary>
+    /// Creates a span wrapper around the jQuery element given,
+    /// </summary>
+    /// <param name="$element" type="type">jQuery Element given.</param>
+    /// <param name="wrapperClass" type="type">class name for the wrapper.</param>
+    /// <param name="wrapperId" type="type">wrapper id.</param>
+    /// <returns type=""></returns>
+    if (_.isEmpty(wrapperClass)) {
+        wrapperClass = "element-animation-wrapper";
     }
 
-    if (idName === undefined) {
-        return $element.wrap("<span class='animation-js-" + className + "'></span>");
+    if (_.isEmpty(wrapperId)) {
+        return $element.wrap("<span class='animation-js-" + wrapperClass + "'></span>");
         //return $element;
     } else {
-        $element.wrap("<span class='" + className + "'" + "id='" + idName + "'></span>");
+        $element.wrap("<span class='" + wrapperClass + "'" + "id='" + wrapperId + "'></span>");
     }
     return $element;
 }
@@ -306,21 +315,22 @@ $.animateJs.styleManipulation.multipleAnimation = function (actionList) {
 ///#source 1 1 /src/scripts/stylemanipulation/processactionlist.js
 $.animateJs.styleManipulation.processActionList = function (actionList, $element) {
     /// <summary>
-    /// 
+    /// Process every action found in the list.
     /// </summary>
     /// <param name="actionList" type="[arrayOfJsonObjects][jsonObjects]">list of all styles to implement</param>
-    /// <param name="$element" type="DOM element"></param>
+    /// <param name="$element" type="DOM element">Pass a DOM </param>
 
-    var delayTillNow = 0;
-    var nowDelay;
-    var multipleOnMain = this.multipleAnimation(actionList);
-    var multipleOnChildren;
-    var $children;
-    var $child;
-    var wrapperName = "wrapper-start";
-    var selectorText;
-    //sd
+    var delayTillNow = 0,
+        nowDelay,
+        multipleOnMain = this.multipleAnimation(actionList),
+        multipleOnChildren,
+        $children,
+        $child,
+        wrapperName = "wrapper-start",
+        selectorText;
+
     //console.log("hello from processAction " + actionList.length);
+
     for (var i = 0; i < actionList.length; i++) {
         selectorText = actionList[i][0].selection;
 
@@ -350,19 +360,20 @@ $.animateJs.styleManipulation.processActionList = function (actionList, $element
                     if (multipleOnChildren) {
                         this.wrapper($child, wrapperName);
                     }
+
                     this.applySimultaneousStyle(actionList[i], $child, delayTillNow, false);
                 }
             }
 
         } else {
-            //console.log(actionList[i]);
-            //console.log(this.totalDuration(actionList[i]));
+          
             if (multipleOnMain) {
                 multipleOnMain = false;
                 this.wrapper($element, wrapperName);
             } else {
                 $element = this.wrapper($element, "element-animation-wrapper").parent();
             }
+
             $element=this.applySimultaneousStyle(actionList[i], $element, delayTillNow, false);
             console.log($element);
         }

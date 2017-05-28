@@ -1,5 +1,4 @@
-﻿;
-/**
- * Animate js is a library : 1.1.
+﻿/**
+ * Animate Js is a library : 1.1.
  */
-$.animateJs = {}; //json , class or object.
+;$.animateJs = {};
