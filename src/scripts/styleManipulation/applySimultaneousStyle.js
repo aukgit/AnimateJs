@@ -10,12 +10,11 @@ $.animateJs.styleManipulation.applySimultaneousStyle = function (singleSimultane
 
     if (singleSimultaneousAction.length) { //more style to apply
         //wrap the element with span
-        $newEle = this.wrapper($element, "element-animation-wrapper").parent();
-        return this.applySimultaneousStyle(singleSimultaneousAction, $newEle, isRemove);
+        $newEle = this.wrapper($element, "wrapper").parent();
+        return this.applySimultaneousStyle(singleSimultaneousAction, $newEle, 0, isRemove);
     } else  {//no more style to apply and element needs to be removed.
         console.log("hi ");
         console.log($element);
         return $element;
     }
 }
-

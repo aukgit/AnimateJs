@@ -51,12 +51,12 @@
             }
 
         } else {
-          
+
             if (multipleOnMain) {
                 multipleOnMain = false;
                 this.wrapper($element, wrapperName);
             } else {
-                $element = this.wrapper($element, "element-animation-wrapper").parent();
+                $element = this.wrapper($element, "wrapper").parent();
             }
 
             $element=this.applySimultaneousStyle(actionList[i], $element, delayTillNow, false);

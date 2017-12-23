@@ -80,3 +80,4 @@ ignored-password.txt
 *.pubxml
 *.PublishSettings
 *.pubxml
+node_modules/

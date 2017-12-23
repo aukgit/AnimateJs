@@ -1,6 +1,6 @@
 ﻿$.animateJs.styleManipulation.applySingleStyle = function ($element, styleJson, additionalDelay) {
     var styleName = styleJson.style;
-    var totalDelay = (parseInt(styleJson.delay) + parseInt(additionalDelay)).toString();
+    var totalDelay = (parseInt(styleJson.delay) + parseInt(additionalDelay)).toString() + "s";
     console.log("time " + totalDelay);
     $element.addClass(styleName + ' animated');
 

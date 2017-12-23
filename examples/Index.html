@@ -6,52 +6,38 @@
     <link href="Styles/bootstrap.css" rel="stylesheet" />
     <link href="Styles/bootstrap-theme.css" rel="stylesheet" />
     <link href="Styles/animate.css" rel="stylesheet" />
+    <link rel="stylesheet" href="Styles/app.css">
 </head>
 <body>
-    <div class="container" id="habi">
-        <h1>Animate Js</h1>
-        <div class="row" id="jabi">
-            <div class="col-md-4 a-js " data-animate="elastic+shake">
-                Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
-            </div>
-            <div class="col-md-4 this-one animated bounce second">
-                Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
-            </div>
-            <div class=" ">
-                <div class="col-md-4 third">
-                    Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
-                </div>
-            </div>
-        </div>
-        <div class="row"></div>
-        <br /><br />
-        <!--<br /><br />-->
-        <div class="row a-js" data-animate="selector('#abcX')->fadeIn+shake->dur(8s)->fadeOut">
-            <h1>Second row </h1>
-            <div class="col-md-4" id="abc">
-                <!--<div class="col-md-4 a-js " data-animate="flash->duration(3s)+shake->duration(10s)">-->
-                Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
-            </div>
-            <div class="col-md-4 this-one animated bounce second">
-                Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
-            </div>
-            <div class=" ">
-                <div class="col-md-4 third">
-                    Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <span class="shake animated">
-            <div class="col-md-4 flash animated">hello there</div>
-        </span>
-    </div>
 
+    <div class="container-fluid">
+      <div class="row hero">
+        <h2 class="a-js" data-animate="bounceInLeft+tada->delay(3s)">AnimateJs</h2>
+        <div class="a-js" data-animate="Select('#ele')->fadeIn->delay(1s)">
+          <p id="ele">Child Element Animation Testing</p>
+        </div>
+      </div>
+
+      <div class="row about">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <h2 class="a-js" data-animate="lightSpeedIn">About Us</h2>
+              <p class="a-js" data-animate="fadeIn->delay(1s)">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo fuga libero consequatur itaque, rem quibusdam laboriosam similique temporibus maiores a delectus velit est, pariatur, rerum minima sint eum quod deleniti.</p>
+            </div>
+            <div class="col-md-6">
+              <img src="http://placehold.it/640x480" class="img-responsive a-js" data-animate="bounceInRight->delay(1s)">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
 
     <script src="lib/jquery-2.2.4.js"></script>
     <script src="lib/bootstrap.js"></script>
-    <script src="../dist/scripts/animate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" charset="utf-8"></script>
+    <script src="../dist/scripts/animate.min.js"></script>
     <script src="lib/how-to-use-animatejs.js"></script>
 </body>
 </html>

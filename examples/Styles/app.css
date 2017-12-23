@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.row {
+  overflow: hidden;
+}
+
+.ajs-wrapper {
+  display: inline-block;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 50vh;
+  background: #222;
+  color: #FFF;
+}
+
+.about {
+  padding: 30px;
+}
