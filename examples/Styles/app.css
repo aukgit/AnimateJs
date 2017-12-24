@@ -18,9 +18,52 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  min-height: 50vh;
+  min-height: 25vh;
   background: #222;
   color: #FFF;
+}
+
+.custom-animation {
+  padding: 50px;
+  text-align: center;
+}
+
+.custom-animation .form-group {
+  margin-right: 15px;
+}
+
+
+
+.testArea {
+  text-align: center;
+  background: #222;
+  height: 163px;
+  padding: 50px;
+}
+
+.cmdtest {
+  margin-top: 20px;
+}
+
+#animCmd {
+  width: 250px;
+}
+
+.atest {
+  padding: 5px 10px;
+  border: 1px solid rgba(0,0,0,0.2);
+  margin-right: 30px;
+}
+
+
+
+.test2 {
+  margin-right: 0;
+}
+
+.selectMe {
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .about {
