@@ -2,6 +2,18 @@ Welcome to Animate.js
 ===================
 Welcome to the **[Animate.js](https://github.com/aukgit/AnimateJs/ "Animate.js")**.
 
+##### Select element by right click and Animate
+
+![alt text](https://raw.githubusercontent.com/aukgit/AnimateJs/master/screenshots/AnimateJS-Right-Click.gif "Select element by right click and Animate")
+
+
+##### Animate element by command
+
+![alt text](https://raw.githubusercontent.com/aukgit/AnimateJs/master/screenshots/AnimateJS-Command.gif "Animate element by command")
+
+
+
+
 #### Current Version and future versions
 Current and future versions will be written and maintained by [Md. Alim Ul Karim](https://github.com/aukgit "Md. Alim Ul Karim github").
 
