@@ -1,6 +1,6 @@
 Welcome to Animate.js
 ===================
-Welcome to the **[Animate.js](https://github.com/aukgit/AnimateJs/ "Animate.js")**. 
+Welcome to the **[Animate.js](https://github.com/aukgit/AnimateJs/ "Animate.js")**.
 
 #### Current Version and future versions
 Current and future versions will be written and maintained by [Md. Alim Ul Karim](https://github.com/aukgit "Md. Alim Ul Karim github").
